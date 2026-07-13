@@ -85,7 +85,7 @@
         <a href="#about" class="hover:text-slate-900 dark:hover:text-white transition">기획자 소개</a>
       </nav>
       <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- 큐레이터 전용 추가 버튼 (기본 숨김) -->
+        <!-- 큐레이터 전용 추가 버튼 (기본 숨김, 이스터에그 발동 시 해제) -->
         <button id="curatorRegisterBtn" onclick="openCuratorModal()" class="hidden text-xs text-slate-600 hover:text-slate-900 dark:text-midnight-300 dark:hover:text-accent-teal transition flex items-center gap-1.5 mr-1 py-1 px-2 rounded-lg">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           <span class="hidden xs:inline">큐레이션 </span>등록
@@ -111,7 +111,7 @@
   <!-- 메인 레이아웃 -->
   <main class="flex-grow">
     
-    <!-- 히어로 섹션 (스토리텔링 흐름 C: 접속 후 즉시 탐색 유도) -->
+    <!-- 히어로 섹션 -->
     <section class="relative py-12 sm:py-20 lg:py-32 overflow-hidden border-b border-slate-200 dark:border-midnight-800/40 bg-slate-100/30 dark:bg-transparent">
       <div class="absolute inset-0 bg-gradient-to-b from-slate-200/20 dark:from-midnight-900/40 to-transparent pointer-events-none"></div>
       
@@ -162,12 +162,12 @@
       <!-- 섹션 헤더 및 동적 필터 카테고리 -->
       <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 pb-4 border-b border-slate-200 dark:border-midnight-800/60">
         <div>
-          <!-- 이스터에그 연동 h2 태그: 기획자의 의도에 맞게 모든 호버 및 특수 커서 클래스 제거 -->
+          <!-- 이스터에그 연동 h2 태그 -->
           <h2 onclick="handleSecretClick()" class="text-lg sm:text-xl font-semibold tracking-tight text-slate-900 dark:text-white mb-1 select-none">나만의 안식처 찾기</h2>
           <p class="text-xs text-slate-500 dark:text-midnight-300 font-light">선택한 무드와 일치하는 공간을 필터링하여 확인해 보세요.</p>
         </div>
         
-        <!-- 동적 탭 필터 (상황별 태깅 매력 포인트 반영) -->
+        <!-- 동적 탭 필터 -->
         <div class="flex flex-wrap gap-1 mt-4 lg:mt-0" id="filterContainer">
           <button onclick="filterCategory('all')" data-filter="all" class="filter-btn px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium transition bg-slate-900 text-white dark:bg-accent-teal dark:text-midnight-950 shadow-sm">전체</button>
           <button onclick="filterCategory('work')" data-filter="work" class="filter-btn px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium transition bg-white text-slate-600 border border-slate-200 hover:border-slate-300 dark:border-transparent dark:bg-midnight-900 dark:text-midnight-300 dark:hover:text-white shadow-sm">#조용한작업</button>
@@ -198,7 +198,7 @@
         </button>
       </div>
 
-      <!-- 카드 그리드 리스트 (반응형 열 구성 적용) -->
+      <!-- 카드 그리드 리스트 -->
       <div id="placesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         <!-- JS로 동적 생성됨 -->
       </div>
@@ -211,16 +211,16 @@
       </div>
     </section>
 
-    <!-- 매력포인트 검증 가이드 (A, C, D 상세 가치관 전달) -->
+    <!-- 매력포인트 검증 가이드 -->
     <section id="philosophy" class="bg-slate-100/80 dark:bg-midnight-900/30 border-t border-b border-slate-200 dark:border-midnight-800/50 py-12 sm:py-16">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-xl mx-auto mb-10 sm:mb-12">
-          <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">우리가 정보를 검증하는 고집</h2>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-midnight-300 font-light">수많은 정보 중에서 우리가 직접 고집스럽게 엄선하고 정제하는 기준입니다.</p>
+          <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">우리가 정보를 검증하는 고집</h2>
+          <p class="text-sm text-slate-500 dark:text-midnight-300 font-light">수많은 정보 중에서 우리가 직접 고집스럽게 엄선하고 정제하는 기준입니다.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          <!-- 원칙 1: 투명하고 독립적인 큐레이션 -->
+          <!-- 원칙 1 -->
           <div class="bg-white dark:bg-midnight-900/60 p-6 rounded-xl border border-slate-200 dark:border-midnight-800/80 hover:border-slate-300 dark:hover:border-midnight-700/60 transition group">
             <div class="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
               <i data-lucide="shield-check" class="w-5 h-5"></i>
@@ -231,7 +231,7 @@
             </p>
           </div>
 
-          <!-- 원칙 2: 분위기 목적별 세부 태깅 -->
+          <!-- 원칙 2 -->
           <div class="bg-white dark:bg-midnight-900/60 p-6 rounded-xl border border-slate-200 dark:border-midnight-800/80 hover:border-slate-300 dark:hover:border-midnight-700/60 transition group">
             <div class="w-10 h-10 rounded-lg bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-accent-teal flex items-center justify-center mb-4 group-hover:scale-110 transition">
               <i data-lucide="hash" class="w-5 h-5"></i>
@@ -242,7 +242,7 @@
             </p>
           </div>
 
-          <!-- 원칙 3: 직관적인 1줄 요약 -->
+          <!-- 원칙 3 -->
           <div class="bg-white dark:bg-midnight-900/60 p-6 rounded-xl border border-slate-200 dark:border-midnight-800/80 hover:border-slate-300 dark:hover:border-midnight-700/60 transition group">
             <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-500 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
               <i data-lucide="align-left" class="w-5 h-5"></i>
@@ -261,7 +261,7 @@
       <div class="bg-gradient-to-r from-slate-100 via-slate-200/40 to-slate-100 dark:from-midnight-900/40 dark:via-midnight-800/40 dark:to-midnight-900/40 border border-slate-200 dark:border-midnight-800 rounded-2xl p-6 sm:p-12 relative overflow-hidden shadow-sm">
         <div class="absolute -top-10 -right-10 w-40 h-40 bg-slate-200 dark:bg-accent-teal/5 rounded-full blur-2xl pointer-events-none"></div>
         <i data-lucide="heart" class="w-8 h-8 text-slate-400 dark:text-accent-teal/60 mx-auto mb-4"></i>
-        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3">어쩌면 우리들의 이야기</h3>
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">어쩌면 우리들의 이야기</h3>
         <p class="text-xs sm:text-sm text-slate-600 dark:text-midnight-300 max-w-2xl mx-auto leading-relaxed font-light mb-6 px-2">
           인스타 핫플이라는 말에 찾아갔다 시끄러운 소음과 광고에 질려 돌아선 분들, 
           그리고 나만의 깊이 있는 분위기를 선호하는 '취향 탐색러'들을 위해 이 지도를 그립니다. 
@@ -273,14 +273,14 @@
 
   </main>
 
-  <!-- 상세 보기 모달 레이아웃 (모바일 대응 터치 영역 및 max-height 연동) -->
+  <!-- 상세 보기 모달 레이아웃 -->
   <div id="detailModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 dark:bg-midnight-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl max-h-[92vh] flex flex-col" id="modalContent">
       
       <!-- 상단 이미지 배너 -->
       <div class="relative h-48 sm:h-56 md:h-64 bg-slate-800 overflow-hidden flex-shrink-0">
         <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
-        <!-- 모바일 대응 확장된 크기의 닫기 버튼 -->
+        <!-- 닫기 버튼 -->
         <button onclick="closeModal()" class="absolute top-3 right-3 bg-white/90 dark:bg-midnight-950/80 text-slate-800 dark:text-white rounded-full p-2.5 hover:scale-105 transition shadow-md z-10" aria-label="닫기">
           <i data-lucide="x" class="w-4.5 h-4.5"></i>
         </button>
@@ -290,7 +290,7 @@
         </div>
       </div>
       
-      <!-- 상세 텍스트 정보 (스크롤 가능하도록 배치 고정) -->
+      <!-- 상세 텍스트 정보 -->
       <div class="p-5 sm:p-6 overflow-y-auto flex-grow transition-all duration-300 opacity-0 transform translate-y-4" id="modalTextContainer">
         <div class="flex items-center justify-between mb-2">
           <span id="modalArea" class="text-[11px] sm:text-xs text-slate-500 dark:text-accent-teal font-medium tracking-wide"></span>
@@ -345,7 +345,7 @@
         </button>
       </div>
       
-      <!-- 모달 폼 바디 (스크롤 가능) -->
+      <!-- 모달 폼 바디 -->
       <form id="curatorForm" onsubmit="handleCuratorSubmit(event)" class="p-5 sm:p-6 space-y-4 overflow-y-auto flex-grow text-xs text-slate-600 dark:text-midnight-300 bg-white dark:bg-midnight-900">
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">장소명 *</label>
@@ -445,7 +445,7 @@
     // 큐레이터가 엄선한 12가지 핵심 정적 장소 데이터
     const staticPlacesData = [
       {
-        id: 1,
+        id: "static-1",
         title: "연희동 ‘책과 소음의 경계’",
         area: "서대문구 연희동",
         oneLine: "완벽하게 어둡고 차분한 분위기에서 아날로그 활자에 몰입하는 심야 책방식 북카페.",
@@ -457,7 +457,7 @@
         address: "서울 서대문구 연희로15길 12, 2층"
       },
       {
-        id: 2,
+        id: "static-2",
         title: "을지로 ‘침묵의 주크박스’",
         area: "중구 을지로",
         oneLine: "위스키와 아날로그 카세트 테이프 소리만 가득한 1인 전용 침묵 바이닐 바.",
@@ -469,7 +469,7 @@
         address: "서울 중구 을지로12길 14 지하 1층"
       },
       {
-        id: 3,
+        id: "static-3",
         title: "성수 ‘공중정원 아틀리에’",
         area: "성동구 성수동",
         oneLine: "콘센트 배치율 100%, 거대한 식물들이 뿜어내는 녹음 속 미니멀 크리에이터 작업실.",
@@ -481,7 +481,7 @@
         address: "서울 성동구 연무장5길 9 3층"
       },
       {
-        id: 4,
+        id: "static-4",
         title: "서촌 ‘다원(茶院)’",
         area: "종로구 누하동",
         oneLine: "비 오는 날 진가가 드러나는, 인왕산 바위 틈을 메운 통창 한옥 다실.",
@@ -493,7 +493,7 @@
         address: "서울 종로구 필운대로3길 11"
       },
       {
-        id: 5,
+        id: "static-5",
         title: "한남 ‘블루 브릭’",
         area: "용산구 한남동",
         oneLine: "클래식 명반 중심의 청취 경험과 바닐라 더블 샷이 탁월한 아키텍처 카페.",
@@ -505,7 +505,7 @@
         address: "서울 용산구 이태원로45길 16 1층"
       },
       {
-        id: 6,
+        id: "static-6",
         title: "망원 ‘스틸 레코드 빌리지’",
         area: "마포구 망원동",
         oneLine: "소음 차단용 높은 투명 파티션과 가벼운 하이볼을 곁들일 수 있는 테라스 가라지.",
@@ -517,7 +517,7 @@
         address: "서울 마포구 포은로6길 31 지하"
       },
       {
-        id: 7,
+        id: "static-7",
         title: "삼청동 ‘기와와 콘크리트’",
         area: "종로구 삼청동",
         oneLine: "전통 기와지붕 아래에 펼쳐진 차가운 노출 콘크리트가 자아내는 극도의 정적감.",
@@ -529,7 +529,7 @@
         address: "서울 종로구 삼청로7길 19"
       },
       {
-        id: 8,
+        id: "static-8",
         title: "서교동 ‘레코드 정션’",
         area: "마포구 서교동",
         oneLine: "턴테이블의 빈티지 노이즈와 함께 즐기는 심야 싱글몰트 아지트.",
@@ -541,7 +541,7 @@
         address: "서울 마포구 와우산로18길 32"
       },
       {
-        id: 10,
+        id: "static-9",
         title: "문래 ‘철공소와 아틀리에’",
         area: "영등포구 문래동",
         oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
@@ -553,7 +553,7 @@
         address: "서울 영등포구 도림로129길 9"
       },
       {
-        id: 9,
+        id: "static-10",
         title: "혜화 ‘낙산의 파란 문’",
         area: "종로구 동숭동",
         oneLine: "낙산성곽길 끝자락에 위치하여 서울 도심 야경이 한눈에 들어오는 루프탑 티룸.",
@@ -565,7 +565,7 @@
         address: "서울 종로구 낙산성곽서길 83"
       },
       {
-        id: 11,
+        id: "static-11",
         title: "상수 ‘오프 더 레코드’",
         area: "마포구 상수동",
         oneLine: "노이즈 캔슬링 부스에서 나만의 플레이리스트를 빌드하는 뮤직 랩 카페.",
@@ -577,7 +577,7 @@
         address: "서울 마포구 독막로8길 23"
       },
       {
-        id: 12,
+        id: "static-12",
         title: "신록의 숨바꼭질",
         area: "서대문구 창천동",
         oneLine: "도심 한복판 빌딩 숲 사이에 완벽히 은폐된 온실 속 보타닉 에스테틱 하우스.",
@@ -608,7 +608,6 @@
         document.documentElement.classList.remove('dark');
         updateThemeIcon(false);
       }
-      // 초기 테마 로드 시 커서 색상 동기화
       updateEmojiCursor();
     }
 
@@ -627,7 +626,6 @@
         updateThemeIcon(true);
         showToast("눈이 편안한 미드나잇 다크 모드가 켜졌습니다.");
       }
-      // 테마 변경 시 커서 조준점 색상 동적 갱신
       updateEmojiCursor();
     }
 
@@ -652,23 +650,20 @@
       updateEmojiCursor();
     }
 
-    // 테마 상태를 감지하여 조준점 색상을 재생성하는 렌더러 (15도 회전 호버 액션 + 모바일/태블릿 터치 디바이스 예외 처리 추가)
+    // 테마 상태를 감지하여 조준점 색상을 재생성하는 렌더러
     function updateEmojiCursor() {
       if (!activeEmoji) return;
       const isDark = document.documentElement.classList.contains('dark');
       
-      // 다크모드일 땐 백색(#ffffff), 라이트모드일 땐 흑색(#000000)
       const dotColor = isDark ? '#ffffff' : '#000000';
       const strokeColor = isDark ? '#000000' : '#ffffff';
       
-      // 1. 기본 SVG 커서 (0도 회전)
       const svgNormal = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="font-size:20px">
         <circle cx="4" cy="4" r="2.5" fill="${dotColor}" stroke="${strokeColor}" stroke-width="0.8"/>
         <text y="6" x="12" dominant-baseline="hanging" transform="rotate(0 22 16)">${activeEmoji}</text>
       </svg>`;
       const base64Normal = btoa(unescape(encodeURIComponent(svgNormal)));
 
-      // 2. 호버용 SVG 커서 (15도 기울어짐)
       const svgHover = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="font-size:20px">
         <circle cx="4" cy="4" r="2.5" fill="${dotColor}" stroke="${strokeColor}" stroke-width="0.8"/>
         <text y="6" x="12" dominant-baseline="hanging" transform="rotate(15 22 16)">${activeEmoji}</text>
@@ -682,15 +677,11 @@
         document.head.appendChild(style);
       }
       
-      // `@media (hover: hover) and (pointer: fine)` 조건부 미디어 쿼리를 사용해 
-      // 마우스를 사용하는 일반 데크스톱 환경에서만 고대비 조준 커서 스타일이 입혀지도록 반응형 격리 설계 완료.
       style.innerHTML = `
         @media (hover: hover) and (pointer: fine) {
-          /* 기본 상태 */
           body, a, button, select, input, textarea, label, [role="button"], .group, .cursor-pointer {
             cursor: url('data:image/svg+xml;base64,${base64Normal}') 4 4, auto;
           }
-          /* 호버 상호작용 지점 - 15도 기울어진 벡터 대체 */
           a:hover, button:hover, select:hover, input:hover, textarea:hover, label:hover, [role="button"]:hover, .group:hover, .cursor-pointer:hover {
             cursor: url('data:image/svg+xml;base64,${base64Hover}') 4 4, auto !important;
           }
@@ -709,7 +700,7 @@
       }
     }
 
-    // "나만의 안식처 찾기" 연속 10회 탭 핸들링 로직 (이스터 에그)
+    // "나만의 안식처 찾기" 연속 10회 탭 핸들링 로직
     let secretClickCount = 0;
     let secretClickTimeout;
 
@@ -719,11 +710,8 @@
 
       if (secretClickCount >= 10) {
         secretClickCount = 0;
-        
-        // 큐레이션 등록 창(모달) 즉시 출력
         openCuratorModal();
         
-        // 숨겨두었던 큐레이션 등록 버튼 영구 해제 노출
         const registerBtn = document.getElementById('curatorRegisterBtn');
         if (registerBtn) {
           registerBtn.classList.remove('hidden');
@@ -731,19 +719,45 @@
         
         showToast("🔓 비밀 큐레이터 모드가 활성화되었습니다!");
       } else {
-        // 2초 안에 누르지 않으면 누적 횟수 초기화
         secretClickTimeout = setTimeout(() => {
           secretClickCount = 0;
         }, 2000);
       }
     }
 
-    // 데이터 초기화
-    function initializeData() {
+    // [서버리스 연동] 데이터 동적 초기화 및 하이브리드 보존망
+    async function initializeData() {
       const stored = localStorage.getItem('chwyl_custom_places');
-      const customPlaces = stored ? JSON.parse(stored) : [];
-      placesData = [...customPlaces, ...staticPlacesData];
-      
+      const localCustomPlaces = stored ? JSON.parse(stored) : [];
+      let apiPlaces = [];
+
+      try {
+        // Netlify 서버리스 함수 호출
+        const response = await fetch('/.netlify/functions/api?action=getPlaces');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.places && data.places.length > 0) {
+            apiPlaces = data.places;
+          }
+        }
+      } catch (error) {
+        console.warn("Netlify API 로드 지연/실패: 정적 로컬 데이터를 바탕으로 구동합니다.", error);
+      }
+
+      // 데이터 병합 (우선순위: 로컬 저장 커스텀 ➡️ API 저장 커스텀 ➡️ 기본 12개 정적 장소)
+      placesData = [...localCustomPlaces, ...apiPlaces, ...staticPlacesData];
+
+      // 혹시 모를 중복 렌더링 방지용 ID 기반 유니크화 정렬
+      const uniquePlaces = [];
+      const seenIds = new Set();
+      placesData.forEach(place => {
+        if (!seenIds.has(place.id)) {
+          seenIds.add(place.id);
+          uniquePlaces.push(place);
+        }
+      });
+      placesData = uniquePlaces;
+
       placesData.forEach((place, index) => {
         place._originalIdx = index;
       });
@@ -797,10 +811,9 @@
 
       sliced.forEach(place => {
         const card = document.createElement('div');
-        // FLIP을 위한 고유 ID 부여 및 openModal에 'this' 전달
         card.id = `place-card-${place.id}`;
         card.className = "bg-white dark:bg-midnight-900 border border-slate-200/60 dark:border-midnight-850 hover:border-slate-400 dark:hover:border-midnight-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md dark:shadow-lg hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer group";
-        card.setAttribute('onclick', `openModal(${place.id}, this)`);
+        card.setAttribute('onclick', `openModal('${place.id}', this)`); // ID가 문자열일 수 있으므로 쿼트 처리
         
         card.innerHTML = `
           <div>
@@ -889,7 +902,7 @@
       showToast("모든 검색 필터가 초기화되었습니다.");
     }
 
-    // 모달창 팝업 제어 (FLIP 애니메이션 패턴 및 모바일 높이 예외 처리)
+    // 모달창 팝업 제어
     function openModal(id, cardElement) {
       const place = placesData.find(p => p.id === id);
       if (!place) return;
@@ -924,11 +937,10 @@
       modal.classList.remove('pointer-events-none', 'opacity-0');
       modal.classList.add('opacity-100');
 
-      // 모바일 등 터치 기기에서는 트래킹 오차 범위가 생기므로 뷰포트 크기에 따른 분기 처리
       const isMobile = window.innerWidth < 640;
 
       if (cardElement && !isMobile) {
-        // [데스크톱 환경 - 고해상도 FLIP 기법 적용]
+        // [데스크톱 - FLIP 애니메이션 작동]
         const firstRect = cardElement.getBoundingClientRect();
 
         content.style.transition = 'none';
@@ -953,7 +965,7 @@
           textContainer.style.transform = 'translateY(0)';
         }, 300);
       } else {
-        // [모바일 환경 - 과도한 좌표 변화로 인한 오작동 차단용 페이드 인 & 업 매커니즘 전환]
+        // [모바일 - 페이드 인 모션으로 우회 조율]
         content.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
         content.style.transform = 'scale(1)';
         
@@ -995,7 +1007,6 @@
       lucide.createIcons();
     }
 
-    // 큐레이터 모달 닫기
     function closeCuratorModal() {
       const modal = document.getElementById('curatorModal');
       const content = document.getElementById('curatorModalContent');
@@ -1007,8 +1018,8 @@
       document.getElementById('curatorForm').reset();
     }
 
-    // 신규 큐레이션 서브밋 처리
-    function handleCuratorSubmit(event) {
+    // [서버리스 연동] 신규 큐레이션 서브밋 처리
+    async function handleCuratorSubmit(event) {
       event.preventDefault();
       
       const title = document.getElementById('addTitle').value.trim();
@@ -1040,30 +1051,67 @@
       ];
       const img = userImg || defaultImgs[Math.floor(Math.random() * defaultImgs.length)];
 
-      const newPlace = {
-        id: Date.now(), 
+      const placePayload = {
         title,
         area,
         oneLine,
         review,
         tags: checkedTags,
-        tagNames,
         rating: rating.toFixed(1),
         img,
         address
       };
 
-      const stored = localStorage.getItem('chwyl_custom_places');
-      const customPlaces = stored ? JSON.parse(stored) : [];
-      customPlaces.unshift(newPlace); 
-      
-      localStorage.setItem('chwyl_custom_places', JSON.stringify(customPlaces));
+      // 제출 중 UI 블로킹 처리
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "클라우드 등록 중...";
+      submitBtn.disabled = true;
 
-      initializeData();
-      renderPlaces(currentFilter, document.getElementById('searchInput').value);
+      let apiSuccess = false;
+
+      try {
+        // Netlify Functions를 통한 GitHub Discussions 포스팅 요청
+        const response = await fetch('/.netlify/functions/api?action=createPlace', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(placePayload)
+        });
+
+        if (response.ok) {
+          apiSuccess = true;
+          showToast(`'${title}'이(가) GitHub 클라우드에 영구 등록되었습니다.`);
+        } else {
+          const errData = await response.json();
+          console.error("API 등록 거절:", errData.error);
+        }
+      } catch (error) {
+        console.warn("Netlify API 전송 실패: 로컬 브라우저 메모리에 임시 보관합니다.", error);
+      }
+
+      // API 연동 실패/지연 시 하이브리드 로컬 백업 세이프티 가동
+      if (!apiSuccess) {
+        const localPlace = {
+          id: `local-${Date.now()}`,
+          ...placePayload,
+          tagNames
+        };
+        const stored = localStorage.getItem('chwyl_custom_places');
+        const customPlaces = stored ? JSON.parse(stored) : [];
+        customPlaces.unshift(localPlace);
+        localStorage.setItem('chwyl_custom_places', JSON.stringify(customPlaces));
+        showToast(`[로컬 보관] '${title}'이(가) 브라우저 메모리에 등록되었습니다.`);
+      }
+
+      // UI 정상 복구
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
       
       closeCuratorModal();
-      showToast(`'${title}'이(가) 신규 큐레이션 장소로 등록되었습니다.`);
+      
+      // 즉각 비동기 동기화 로드 실행
+      await initializeData();
+      renderPlaces(currentFilter, document.getElementById('searchInput').value);
     }
 
     // 커스텀 가상 보관함 기능
@@ -1073,7 +1121,7 @@
       showToast(`'${title}'이(가) 내 취향 보관함에 저장되었습니다.`);
     }
 
-    // 자체 알림 메커니즘 (Toast UI)
+    // 자체 알림 메커니즘
     function showToast(msg) {
       const toast = document.getElementById('toast');
       const toastMsg = document.getElementById('toastMsg');
@@ -1089,7 +1137,7 @@
     }
 
     // 이벤트 리스너 마운트
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
       // 테마 초기 로드 설정
       initTheme();
 
@@ -1127,8 +1175,8 @@
       window.addEventListener('scroll', updateScrollProgress);
       updateScrollProgress();
 
-      // 기본 데이터 빌드 및 렌더링
-      initializeData();
+      // 기본 데이터 빌드 및 비비동기 렌더링
+      await initializeData();
       renderPlaces();
       lucide.createIcons();
     });
