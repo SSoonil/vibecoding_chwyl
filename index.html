@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHWYL | 헤매지 않는 여정, 검증된 취향 지도</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Pretendard 폰트 불러오기 -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', 'sans-serif'],
+          },
+          colors: {
+            midnight: {
+              950: '#070a13',
+              900: '#0a1128',
+              800: '#1c2541',
+              700: '#3a506b',
+              300: '#cbd5e1',
+              100: '#f1f5f9',
+            },
+            accent: {
+              silver: '#e2e8f0',
+              teal: '#64dfdf',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background-color: #070a13;
+      color: #f1f5f9;
+    }
+    /* 스크롤바 커스텀 */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a1128;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3a506b;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64dfdf;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+  <!-- 네비게이션 바 -->
+  <header class="border-b border-midnight-800/80 backdrop-blur-md bg-midnight-950/80 sticky top-0 z-40 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center space-x-2">
+        <span class="text-xl font-bold tracking-widest text-white">CHWYL <span class="text-xs font-light text-midnight-300 ml-1">취향지도</span></span>
+      </a>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium text-midnight-300">
+        <a href="#map-explore" class="hover:text-white transition">지도 탐색</a>
+        <a href="#philosophy" class="hover:text-white transition">검증 기준</a>
+        <a href="#about" class="hover:text-white transition">기획자 소개</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <!-- 큐레이터 전용 추가 버튼 디자인 가이드 준수 -->
+        <button onclick="openCuratorModal()" class="text-xs text-midnight-300 hover:text-accent-teal transition flex items-center gap-1.5 mr-2">
+          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+          큐레이션 등록
+        </button>
+        <span class="text-xs bg-midnight-800 text-midnight-300 px-3 py-1.5 rounded-full border border-midnight-700/50 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 bg-accent-teal rounded-full animate-pulse"></span>
+          독립 큐레이션 아카이브
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 레이아웃 -->
+  <main class="flex-grow">
+    
+    <!-- 히어로 섹션 (스토리텔링 흐름 C: 접속 후 즉시 탐색 유도) -->
+    <section class="relative py-20 lg:py-32 overflow-hidden border-b border-midnight-800/40">
+      <div class="absolute inset-0 bg-gradient-to-b from-midnight-900/40 to-transparent pointer-events-none"></div>
+      
+      <!-- 데코레이션 백그라운드 구형 그래디언트 -->
+      <div class="absolute -top-40 -left-40 w-96 h-96 bg-midnight-800/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-accent-teal/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <!-- 뱃지 -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-midnight-800/60 border border-midnight-700/60 text-xs text-midnight-300 mb-6 uppercase tracking-widest">
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-accent-teal"></i> Real Taste Map
+        </div>
+        
+        <!-- 캐치프레이즈 -->
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-6">
+          헤매지 않는 여정, <br class="sm:hidden">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-midnight-300">
+            검증된 장소만 모은 취향 지도
+          </span>
+        </h1>
+        
+        <p class="text-base sm:text-lg text-midnight-300 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+          정보의 범람 속에서, 오직 신뢰할 수 있는 관점으로 엄선한 장소들을 한 장의 사진과 본질적인 문장으로 정제하여 소개합니다.
+        </p>
+
+        <!-- 즉시 검색창 (스토리텔링 C 타입) -->
+        <div class="max-w-xl mx-auto mb-8">
+          <div class="relative flex items-center">
+            <i data-lucide="search" class="absolute left-4 text-midnight-300 w-5 h-5 pointer-events-none"></i>
+            <input type="text" id="searchInput" placeholder="지역이나 분위기, 목적을 입력해 보세요..." 
+              class="w-full bg-midnight-900/90 text-white placeholder-midnight-700 border border-midnight-800 focus:border-accent-teal focus:ring-1 focus:ring-accent-teal rounded-xl py-3.5 pl-12 pr-4 outline-none transition text-sm shadow-xl">
+          </div>
+        </div>
+
+        <!-- 퀵 숏컷 태그들 -->
+        <div class="flex flex-wrap justify-center gap-2 text-xs text-midnight-300">
+          <span class="text-midnight-700 self-center mr-1">추천 탐색 :</span>
+          <button onclick="setSearch('연희동')" class="px-3 py-1 bg-midnight-800/40 hover:bg-midnight-800 border border-midnight-800 hover:border-midnight-700 rounded-lg transition">#연희동</button>
+          <button onclick="setSearch('카공')" class="px-3 py-1 bg-midnight-800/40 hover:bg-midnight-800 border border-midnight-800 hover:border-midnight-700 rounded-lg transition">#카공</button>
+          <button onclick="setSearch('조용한')" class="px-3 py-1 bg-midnight-800/40 hover:bg-midnight-800 border border-midnight-800 hover:border-midnight-700 rounded-lg transition">#조용한</button>
+          <button onclick="setSearch('혼술')" class="px-3 py-1 bg-midnight-800/40 hover:bg-midnight-800 border border-midnight-800 hover:border-midnight-700 rounded-lg transition">#혼술</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 탐색 맵 & 필터 그리드 영역 -->
+    <section id="map-explore" class="max-w-6xl mx-auto px-6 py-12">
+      <!-- 섹션 헤더 및 동적 필터 카테고리 -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-midnight-800/60">
+        <div>
+          <h2 class="text-xl font-semibold tracking-tight text-white mb-1">나만의 안식처 찾기</h2>
+          <p class="text-xs text-midnight-300 font-light">선택한 무드와 일치하는 공간을 필터링하여 확인해 보세요.</p>
+        </div>
+        
+        <!-- 동적 탭 필터 (상황별 태깅 매력 포인트 반영) -->
+        <div class="flex flex-wrap gap-1.5 mt-4 md:mt-0" id="filterContainer">
+          <button onclick="filterCategory('all')" data-filter="all" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-accent-teal text-midnight-950">전체</button>
+          <button onclick="filterCategory('work')" data-filter="work" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-midnight-900 text-midnight-300 hover:text-white">#조용한작업</button>
+          <button onclick="filterCategory('date')" data-filter="date" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-midnight-900 text-midnight-300 hover:text-white">#힙한데이트</button>
+          <button onclick="filterCategory('healing')" data-filter="healing" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-midnight-900 text-midnight-300 hover:text-white">#아늑한쉼</button>
+          <button onclick="filterCategory('night')" data-filter="night" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-midnight-900 text-midnight-300 hover:text-white">#감각적혼술</button>
+        </div>
+      </div>
+
+      <!-- 리스트 결과 상태 표시 (정렬 토글 탑재) -->
+      <div id="resultsCount" class="text-xs text-midnight-300 mb-6 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span>엄선된 장소 <strong class="text-white" id="countNum">0</strong>개 발견</span>
+          <span class="text-midnight-800">|</span>
+          <div class="relative inline-flex items-center">
+            <select id="sortSelect" onchange="handleSortChange(this.value)" class="bg-midnight-950 border border-midnight-800 text-midnight-300 rounded-lg py-1 pl-2.5 pr-7 outline-none focus:border-accent-teal hover:text-white text-[11px] appearance-none cursor-pointer transition">
+              <option value="latest">최신순</option>
+              <option value="rating">별점순</option>
+              <option value="name">이름순</option>
+            </select>
+            <div class="pointer-events-none absolute right-2 flex items-center">
+              <i data-lucide="chevron-down" class="w-3 h-3 text-midnight-300"></i>
+            </div>
+          </div>
+        </div>
+        <button id="resetFilters" onclick="resetAllFilters()" class="text-midnight-300 hover:text-white flex items-center gap-1">
+          <i data-lucide="refresh-cw" class="w-3 h-3"></i> 필터 초기화
+        </button>
+      </div>
+
+      <!-- 카드 그리드 리스트 (매력 포인트 D: 사진 한 장과 한 줄 요약) -->
+      <div id="placesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS로 동적 생성됨 -->
+      </div>
+
+      <!-- 더 보기 버튼 컨테이너 -->
+      <div id="loadMoreContainer" class="flex justify-center mt-12 hidden">
+        <button onclick="loadMore()" class="px-6 py-3 bg-midnight-900 hover:bg-midnight-800 border border-midnight-800 hover:border-midnight-700 text-white rounded-xl text-xs font-semibold tracking-wider transition flex items-center gap-2 shadow-lg">
+          검증된 장소 더 보기 <i data-lucide="chevron-down" class="w-4 h-4 text-accent-teal"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- 매력포인트 검증 가이드 (A, C, D 상세 가치관 전달) -->
+    <section id="philosophy" class="bg-midnight-900/30 border-t border-b border-midnight-800/50 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center max-w-xl mx-auto mb-12">
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-2">우리가 정보를 검증하는 고집</h2>
+          <p class="text-sm text-midnight-300 font-light">수많은 정보 중에서 우리가 직접 고집스럽게 엄선하고 정제하는 기준입니다.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- 원칙 1: 투명하고 독립적인 큐레이션 (매력포인트 A 수정) -->
+          <div class="bg-midnight-900/60 p-6 rounded-xl border border-midnight-800/80 hover:border-midnight-700/60 transition group">
+            <div class="w-10 h-10 rounded-lg bg-red-900/20 text-red-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-2">투명하고 독립적인 큐레이션</h3>
+            <p class="text-xs text-midnight-300 leading-relaxed font-light">
+              어떠한 외부 간섭이나 상업적 제안도 일절 배제합니다. 오직 공간이 주는 본질적인 가치와 경험만을 솔직하게 기록하고 공유합니다.
+            </p>
+          </div>
+
+          <!-- 원칙 2: 분위기 목적별 세부 태깅 (매력포인트 C) -->
+          <div class="bg-midnight-900/60 p-6 rounded-xl border border-midnight-800/80 hover:border-midnight-700/60 transition group">
+            <div class="w-10 h-10 rounded-lg bg-teal-900/20 text-accent-teal flex items-center justify-center mb-4 group-hover:scale-110 transition">
+              <i data-lucide="hash" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-2">상황과 목적별 세밀한 매칭</h3>
+            <p class="text-xs text-midnight-300 leading-relaxed font-light">
+              "홍대 맛집" 같은 뻔한 정보는 버리세요. '콘센트가 많아 작업하기 편한', '어두컴컴한 독서 전용' 등 실질적인 사용 목적과 세부적인 태그로 큐레이션합니다.
+            </p>
+          </div>
+
+          <!-- 원칙 3: 직관적인 1줄 요약 (매력포인트 D) -->
+          <div class="bg-midnight-900/60 p-6 rounded-xl border border-midnight-800/80 hover:border-midnight-700/60 transition group">
+            <div class="w-10 h-10 rounded-lg bg-blue-900/20 text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+              <i data-lucide="align-left" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-2">지루함 없는 한 줄 직관성</h3>
+            <p class="text-xs text-midnight-300 leading-relaxed font-light">
+              맛집 블로그의 무의미한 일상 수다와 인트로를 완전히 생략했습니다. 검증을 위한 사진 한 장과 오직 본질에 집중한 한 줄 요약으로 끝냅니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 타겟 공감대 코너 (타겟 방문자 B, C를 겨냥하는 섹션) -->
+    <section id="about" class="max-w-4xl mx-auto px-6 py-16 text-center">
+      <div class="bg-gradient-to-r from-midnight-900/40 via-midnight-800/40 to-midnight-900/40 border border-midnight-800 rounded-2xl p-8 sm:p-12 relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-accent-teal/5 rounded-full blur-2xl pointer-events-none"></div>
+        <i data-lucide="heart" class="w-8 h-8 text-accent-teal/60 mx-auto mb-4"></i>
+        <h3 class="text-lg font-bold text-white mb-3">어쩌면 우리들의 이야기</h3>
+        <p class="text-xs text-midnight-300 max-w-2xl mx-auto leading-relaxed font-light mb-6">
+          인스타 핫플이라는 말에 찾아갔다 시끄러운 소음과 광고에 질려 돌아선 분들, 
+          그리고 나만의 깊이 있는 분위기를 선호하는 '취향 탐색러'들을 위해 이 지도를 그립니다. 
+          헤매지 마세요. 검증된 장소에서 온전히 당신의 시간에만 몰입하시길 바랍니다.
+        </p>
+        <span class="text-[10px] text-midnight-300/60 tracking-wider block uppercase">— Curator Team CHWYL —</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 상세 보기 모달 레이아웃 (Vanilla JS 제어) -->
+  <div id="detailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-midnight-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-midnight-900 border border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+      
+      <!-- 상단 이미지 배너 -->
+      <div class="relative h-56 sm:h-64 bg-slate-800 overflow-hidden">
+        <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+        <!-- 닫기 버튼 -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 bg-midnight-950/70 hover:bg-midnight-950 text-white rounded-full p-2 hover:scale-105 transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- 검증 완료 보증 마크 -->
+        <div class="absolute bottom-4 left-4 bg-accent-teal text-midnight-950 text-[10px] font-bold px-2 py-1 rounded-md tracking-wider flex items-center gap-1">
+          <i data-lucide="badge-check" class="w-3.5 h-3.5"></i> VERIFIED PICK
+        </div>
+      </div>
+      
+      <!-- 상세 텍스트 정보 -->
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span id="modalArea" class="text-xs text-accent-teal font-medium tracking-wide"></span>
+          <div class="flex items-center space-x-1">
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-accent-teal text-accent-teal"></i>
+            <span id="modalRating" class="text-xs font-bold text-white"></span>
+          </div>
+        </div>
+        
+        <h3 id="modalTitle" class="text-lg font-bold text-white mb-3"></h3>
+        
+        <!-- 한 줄 요약 부각 -->
+        <div class="bg-midnight-950/50 rounded-lg p-3 border-l-2 border-accent-teal mb-4">
+          <span class="text-[10px] text-accent-teal block font-semibold mb-1 uppercase tracking-widest">Core Summary</span>
+          <p id="modalOneLine" class="text-xs text-white font-medium leading-relaxed"></p>
+        </div>
+
+        <div class="space-y-3 text-xs text-midnight-300 font-light mb-6">
+          <p id="modalReview" class="leading-relaxed border-b border-midnight-800 pb-3"></p>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-midnight-300 uppercase font-bold w-12">추천 무드</span>
+            <span id="modalTags" class="text-[10px] flex gap-1.5 text-accent-teal font-medium"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-midnight-300 uppercase font-bold w-12">위치 정보</span>
+            <span id="modalAddress" class="text-[10px] text-white"></span>
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <button onclick="closeModal()" class="w-full py-2.5 bg-midnight-800 hover:bg-midnight-700 text-white rounded-lg text-xs font-medium transition">닫기</button>
+          <button onclick="bookmarkPlace()" class="py-2.5 px-4 bg-midnight-900 border border-midnight-800 hover:border-midnight-700 text-white rounded-lg text-xs font-medium transition flex items-center justify-center gap-1">
+            <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> 보관
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 큐레이터 전용 신규 장소 등록 모달 추가 -->
+  <div id="curatorModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-midnight-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-midnight-900 border border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col" id="curatorModalContent">
+      
+      <!-- 모달 헤더 -->
+      <div class="p-5 border-b border-midnight-800 flex justify-between items-center bg-midnight-950/30">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i data-lucide="pen-tool" class="w-4 h-4 text-accent-teal"></i> 독립 큐레이터 장소 등록
+        </h3>
+        <button onclick="closeCuratorModal()" class="text-midnight-300 hover:text-white transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      
+      <!-- 모달 폼 바디 (스크롤 가능) -->
+      <form id="curatorForm" onsubmit="handleCuratorSubmit(event)" class="p-6 space-y-4 overflow-y-auto flex-grow text-xs text-midnight-300">
+        <div>
+          <label class="block text-white mb-1.5 font-medium">장소명 *</label>
+          <input type="text" id="addTitle" required placeholder="예: 연희동 ‘책과 소음의 경계’" 
+            class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal transition">
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-white mb-1.5 font-medium">지역구/동 주소 *</label>
+            <input type="text" id="addArea" required placeholder="예: 서대문구 연희동" 
+              class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal transition">
+          </div>
+          <div>
+            <label class="block text-white mb-1.5 font-medium">검증 평점 *</label>
+            <input type="number" step="0.1" min="1" max="5" id="addRating" required placeholder="예: 4.8" 
+              class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-white mb-1.5 font-medium">핵심 한 줄 요약 *</label>
+          <input type="text" id="addOneLine" required placeholder="독자적인 컨셉을 보여주는 한 줄의 문장" 
+            class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal transition">
+        </div>
+
+        <div>
+          <label class="block text-white mb-1.5 font-medium">상세 검증 내용 *</label>
+          <textarea id="addReview" rows="3" required placeholder="조도, 소음 수준, 착석 환경 등 고유의 판단 기준을 토대로 작성하세요." 
+            class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal resize-none transition"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-white mb-1.5 font-medium">추천 무드 (복수 선택 가능) *</label>
+          <div class="grid grid-cols-2 gap-2 bg-midnight-950 p-3 rounded-lg border border-midnight-800">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-white transition">
+              <input type="checkbox" name="addTags" value="work" class="rounded accent-accent-teal"> #조용한작업
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-white transition">
+              <input type="checkbox" name="addTags" value="date" class="rounded accent-accent-teal"> #힙한데이트
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-white transition">
+              <input type="checkbox" name="addTags" value="healing" class="rounded accent-accent-teal"> #아늑한쉼
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-white transition">
+              <input type="checkbox" name="addTags" value="night" class="rounded accent-accent-teal"> #감각적혼술
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-white mb-1.5 font-medium">이미지 주소 (미입력 시 기본 Unsplash 랜드스케이프 대체)</label>
+          <input type="url" id="addImg" placeholder="https://images.unsplash.com/..." 
+            class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal transition">
+        </div>
+
+        <div>
+          <label class="block text-white mb-1.5 font-medium">정확한 오프라인 위치 주소 *</label>
+          <input type="text" id="addAddress" required placeholder="예: 서울 종로구 필운대로3길 11" 
+            class="w-full bg-midnight-950 border border-midnight-800 rounded-lg p-2.5 text-white outline-none focus:border-accent-teal transition">
+        </div>
+      </form>
+
+      <!-- 모달 푸터 액션 -->
+      <div class="p-5 border-t border-midnight-800 flex gap-2 bg-midnight-950/20">
+        <button onclick="closeCuratorModal()" class="w-1/3 py-2.5 bg-midnight-800 hover:bg-midnight-700 text-white rounded-lg transition text-xs font-medium">닫기</button>
+        <button type="submit" form="curatorForm" class="w-2/3 py-2.5 bg-accent-teal hover:bg-opacity-90 text-midnight-950 rounded-lg transition text-xs font-bold">큐레이션 정식 등록</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="border-t border-midnight-800/80 bg-midnight-950 py-10 mt-20">
+    <div class="max-w-6xl mx-auto px-6 text-center md:text-left flex flex-col md:flex-row items-center justify-between text-xs text-midnight-300 space-y-6 md:space-y-0">
+      <div>
+        <p class="font-bold text-white tracking-widest mb-1">CHWYL BRAND ARCHIVE</p>
+        <p class="font-light">본 지도는 고유의 기준에 의해 독립적으로 운영되는 데이터 큐레이션 아카이브입니다.</p>
+      </div>
+      <div class="flex space-x-6">
+        <a href="#map-explore" class="hover:text-white transition">내 주변 지도</a>
+        <a href="#philosophy" class="hover:text-white transition">검증 프로토콜</a>
+        <p class="text-midnight-700">© 2026 CHWYL. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 알림 토스트 UI -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-midnight-800 border border-accent-teal/50 text-white px-4 py-2.5 rounded-lg text-xs font-medium shadow-2xl opacity-0 transform translate-y-2 pointer-events-none transition-all duration-300 flex items-center gap-2">
+    <i data-lucide="info" class="w-4 h-4 text-accent-teal"></i>
+    <span id="toastMsg">알림 메시지</span>
+  </div>
+
+  <!-- 큐레이션 데이터 & 로직 스크립트 -->
+  <script>
+    // 큐레이터가 엄선한 12가지 핵심 정적 장소 데이터 (매력포인트 A, C, D 융합)
+    const staticPlacesData = [
+      {
+        id: 1,
+        title: "연희동 ‘책과 소음의 경계’",
+        area: "서대문구 연희동",
+        oneLine: "완벽하게 어둡고 차분한 분위기에서 아날로그 활자에 몰입하는 심야 책방식 북카페.",
+        review: "조도가 매우 낮으며 가사가 없는 엠비언트 음악이 흘러나옵니다. 카공보다는 혼자 일기를 쓰거나 집중해서 소설 한 권을 읽기에 최고의 장소입니다. 모든 자리에 개별 독서등이 설치되어 있어 오롯이 책에 시선을 두기 좋습니다. 주말 오후에는 다소 웨이팅이 있으나, 평일 저녁엔 대기 없이 고요를 만끽할 수 있습니다.",
+        tags: ["work", "healing"],
+        tagNames: ["#조용한작업", "#아늑한쉼", "#집중"],
+        rating: "4.8",
+        img: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80",
+        address: "서울 서대문구 연희로15길 12, 2층"
+      },
+      {
+        id: 2,
+        title: "을지로 ‘침묵의 주크박스’",
+        area: "중구 을지로",
+        oneLine: "위스키와 아날로그 카세트 테이프 소리만 가득한 1인 전용 침묵 바이닐 바.",
+        review: "안주 판매 없이 철저히 주류와 공간에 대한 사색만 제공합니다. 2인 이상 입장이 전면 제한되는 만큼 내부 대화가 금지되어 있어 소음 공포증 환자에게 그야말로 오아시스 같은 곳입니다. 사장님이 직접 선곡한 재즈와 블루스 카세트의 지글거리는 질감이 깊은 위로를 선사합니다.",
+        tags: ["night", "healing"],
+        tagNames: ["#감각적혼술", "#아늑한쉼", "#재즈"],
+        rating: "4.9",
+        img: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
+        address: "서울 중구 을지로12길 14 지하 1층"
+      },
+      {
+        id: 3,
+        title: "성수 ‘공중정원 아틀리에’",
+        area: "성동구 성수동",
+        oneLine: "콘센트 배치율 100%, 거대한 식물들이 뿜어내는 녹음 속 미니멀 크리에이터 작업실.",
+        review: "커피 맛도 보장되며 모던한 스틸 가구와 대형 야자수 식물이 기묘한 조화를 이룹니다. 대부분의 좌석이 디자이너와 프리랜서의 작업에 완벽하게 맞추어져 넓고 콘센트가 가깝습니다. 인쇄 가이드북 같은 깔끔한 가구가 도회적 시크함을 물씬 풍깁니다.",
+        tags: ["work", "date"],
+        tagNames: ["#조용한작업", "#힙한데이트", "#노트북"],
+        rating: "4.6",
+        img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80",
+        address: "서울 성동구 연무장5길 9 3층"
+      },
+      {
+        id: 4,
+        title: "서촌 ‘다원(茶院)’",
+        area: "종로구 누하동",
+        oneLine: "비 오는 날 진가가 드러나는, 인왕산 바위 틈을 메운 통창 한옥 다실.",
+        review: "가야금이나 현대 퓨전 국악이 백그라운드로 엷게 흩뿌려집니다. 웰컴 티를 시작으로 계절에 맞는 발효차를 직접 팽주처럼 우려 마실 수 있는 독특한 경험을 제공합니다. 전면이 통유리로 되어 있어 서촌 특유의 소담하고 예스러운 지붕 풍경을 오롯이 굽어볼 수 있습니다.",
+        tags: ["healing", "date"],
+        tagNames: ["#아늑한쉼", "#힙한데이트", "#전통차"],
+        rating: "4.7",
+        img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
+        address: "서울 종로구 필운대로3길 11"
+      },
+      {
+        id: 5,
+        title: "한남 ‘블루 브릭’",
+        area: "용산구 한남동",
+        oneLine: "클래식 명반 중심의 청취 경험과 바닐라 더블 샷이 탁월한 아키텍처 카페.",
+        review: "도회적이고 각진 콘크리트 인테리어가 차분한 이성을 일깨워 줍니다. 평일에는 근처 광고 대행사나 아트 스튜디오 종사자들이 조용히 아이디어를 스케치하는 광경을 쉽게 볼 수 있습니다. 노이즈 캔슬링 헤드셋 대여 서비스를 조용히 지원하고 있는 디테일이 훌륭합니다.",
+        tags: ["work", "night"],
+        tagNames: ["#조용한작업", "#감각적혼술", "#미니멀"],
+        rating: "4.5",
+        img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+        address: "서울 용산구 이태원로45길 16 1층"
+      },
+      {
+        id: 6,
+        title: "망원 ‘스틸 레코드 빌리지’",
+        area: "마포구 망원동",
+        oneLine: "소음 차단용 높은 투명 파티션과 가벼운 하이볼을 곁들일 수 있는 테라스 가라지.",
+        review: "망원시장 뒤편 으슥한 골목길에 있어 관광객들의 발길이 뜸합니다. 차가운 금속성 가구 디자인으로 세련된 톤을 유지하고 있으며, 하이볼 한 잔과 함께 가벼운 코딩이나 드로잉을 작업하는 긱(Geek)한 방문자들이 애용하는 비밀 성지입니다.",
+        tags: ["night", "work"],
+        tagNames: ["#감각적혼술", "#조용한작업", "#숨은공간"],
+        rating: "4.8",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+        address: "서울 마포구 포은로6길 31 지하"
+      },
+      {
+        id: 7,
+        title: "삼청동 ‘기와와 콘크리트’",
+        area: "종로구 삼청동",
+        oneLine: "전통 기와지붕 아래에 펼쳐진 차가운 노출 콘크리트가 자아내는 극도의 정적감.",
+        review: "고택을 현대적인 감각으로 재해석한 갤러리형 에스프레소 바입니다. 삼청동 메인 거리에서 살짝 비껴가 있어 골목 특유의 고요함을 느낄 수 있습니다. 정갈한 우드 벤치와 스틸 프레임 가구 조화가 차분한 사색을 돕습니다.",
+        tags: ["healing", "work"],
+        tagNames: ["#아늑한쉼", "#조용한작업", "#에스프레소"],
+        rating: "4.7",
+        img: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80",
+        address: "서울 종로구 삼청로7길 19"
+      },
+      {
+        id: 8,
+        title: "서교동 ‘레코드 정션’",
+        area: "마포구 서교동",
+        oneLine: "턴테이블의 빈티지 노이즈와 함께 즐기는 심야 싱글몰트 아지트.",
+        review: "각자의 헤드폰으로 LP를 감상하는 독립형 청음 부스가 갖춰져 있습니다. 대화보다는 음악의 깊이에 침잠하고 싶은 혼술러들에게 절대적인 안식을 제공하며, 다양한 싱글몰트 위스키 컬렉션 또한 합리적인 편입니다.",
+        tags: ["night", "healing"],
+        tagNames: ["#감각적혼술", "#아늑한쉼", "#LP바"],
+        rating: "4.9",
+        img: "https://images.unsplash.com/photo-1484755560695-a4c740285a15?auto=format&fit=crop&w=800&q=80",
+        address: "서울 마포구 와우산로18길 32"
+      },
+      {
+        id: 9,
+        title: "혜화 ‘낙산의 파란 문’",
+        area: "종로구 동숭동",
+        oneLine: "낙산성곽길 끝자락에 위치하여 서울 도심 야경이 한눈에 들어오는 루프탑 티룸.",
+        review: "낮에는 따스한 햇살을, 밤에는 반짝이는 한양도성 성곽과 서울 야경을 동시에 누릴 수 있습니다. 자스민 티와 캐모마일 블렌딩 차가 시그니처이며, 연인들의 조용하고 무드 있는 고백 장소로 애용되는 숨은 명소입니다.",
+        tags: ["date", "healing"],
+        tagNames: ["#힙한데이트", "#아늑한쉼", "#야경"],
+        rating: "4.6",
+        img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+        address: "서울 종로구 낙산성곽서길 83"
+      },
+      {
+        id: 10,
+        title: "문래 ‘철공소와 아틀리에’",
+        area: "영등포구 문래동",
+        oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
+        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이룹니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
+        tags: ["work", "night"],
+        tagNames: ["#조용한작업", "#감각적혼술", "#인더스트리얼"],
+        rating: "4.5",
+        img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80",
+        address: "서울 영등포구 도림로129길 9"
+      },
+      {
+        id: 11,
+        title: "상수 ‘오프 더 레코드’",
+        area: "마포구 상수동",
+        oneLine: "노이즈 캔슬링 부스에서 나만의 플레이리스트를 빌드하는 뮤직 랩 카페.",
+        review: "입장과 동시에 웰컴 드링크와 노이즈캔슬링 헤드폰을 받습니다. 철저히 소리가 격리된 오토만 체어에 누워 통창 너머 한강의 흐름을 멍하니 감상할 수 있습니다. 바쁜 도심 속 영혼의 배터리를 풀 충전하기 알맞은 공간입니다.",
+        tags: ["healing", "work"],
+        tagNames: ["#아늑한쉼", "#조용한작업", "#힐링"],
+        rating: "4.8",
+        img: "https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=800&q=80",
+        address: "서울 마포구 독막로8길 23"
+      },
+      {
+        id: 12,
+        title: "신록의 숨바꼭질",
+        area: "서대문구 창천동",
+        oneLine: "도심 한복판 빌딩 숲 사이에 완벽히 은폐된 온실 속 보타닉 에스테틱 하우스.",
+        review: "수천 그루의 식물이 매장을 감싸 안고 있어 자연 피톤치드 향이 은은하게 퍼집니다. 커피 외에 말차 라떼가 훌륭하며 테이블 간격이 엄청나게 넓어 프라이버시가 극대화되는 도심 속의 또 다른 숲속 정원입니다.",
+        tags: ["date", "healing"],
+        tagNames: ["#힙한데이트", "#아늑한쉼", "#식물카페"],
+        rating: "4.7",
+        img: "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=800&q=80",
+        address: "서울 서대문구 신촌로 73 5층"
+      }
+    ];
+
+    // 커스텀 로컬스토리지 데이터를 관리하기 위한 가변 배열 구조 정의
+    let placesData = [];
+    let currentFilter = 'all';
+    let currentSort = 'latest'; // 정렬 상태 변수 추가
+    let visibleLimit = 6; 
+    const PAGE_SIZE = 6;  
+
+    // 데이터 로드 체계 (로컬스토리지 + 정적 소스)
+    function initializeData() {
+      const stored = localStorage.getItem('chwyl_custom_places');
+      const customPlaces = stored ? JSON.parse(stored) : [];
+      // 새로 추가된 장소가 상단에 뜰 수 있도록 병합 순서 조정
+      placesData = [...customPlaces, ...staticPlacesData];
+      
+      // 최신순 정렬 시 원래 추가되었던 배열 인덱스(순서)를 보존하기 위한 추적 키 추가
+      placesData.forEach((place, index) => {
+        place._originalIdx = index;
+      });
+    }
+
+    // 장소 리스트 렌더링 로직
+    function renderPlaces(filter = 'all', searchQuery = '') {
+      const grid = document.getElementById('placesGrid');
+      const loadMoreContainer = document.getElementById('loadMoreContainer');
+      grid.innerHTML = '';
+
+      const queryNormalized = searchQuery.trim().toLowerCase();
+      
+      const filtered = placesData.filter(place => {
+        const matchesCategory = filter === 'all' || place.tags.includes(filter);
+        const matchesQuery = !queryNormalized || 
+          place.title.toLowerCase().includes(queryNormalized) ||
+          place.oneLine.toLowerCase().includes(queryNormalized) ||
+          place.area.toLowerCase().includes(queryNormalized) ||
+          place.tagNames.some(t => t.toLowerCase().includes(queryNormalized));
+          
+        return matchesCategory && matchesQuery;
+      });
+
+      // 정렬 조건 실시간 반영
+      if (currentSort === 'rating') {
+        filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+      } else if (currentSort === 'name') {
+        filtered.sort((a, b) => a.title.localeCompare(b.title, 'ko'));
+      } else {
+        // 'latest': 초기에 unshift된 최신 데이터부터 순서대로 노출
+        filtered.sort((a, b) => a._originalIdx - b._originalIdx);
+      }
+
+      // 갯수 표시 업데이트
+      document.getElementById('countNum').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center text-midnight-300 flex flex-col items-center justify-center">
+            <i data-lucide="info" class="w-8 h-8 text-midnight-700 mb-3"></i>
+            <p class="text-sm">해당 검색어와 일치하는 검증된 장소가 없습니다.</p>
+            <button onclick="resetAllFilters()" class="text-xs text-accent-teal mt-2 underline">모든 필터 초기화</button>
+          </div>
+        `;
+        loadMoreContainer.classList.add('hidden');
+        lucide.createIcons();
+        return;
+      }
+
+      // 설정된 노출 제한만큼만 데이터 자르기
+      const sliced = filtered.slice(0, visibleLimit);
+
+      sliced.forEach(place => {
+        const card = document.createElement('div');
+        card.className = "bg-midnight-900 border border-midnight-850 hover:border-midnight-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer group";
+        card.setAttribute('onclick', `openModal(${place.id})`);
+        
+        card.innerHTML = `
+          <div>
+            <!-- 이미지 영역 -->
+            <div class="relative h-48 bg-slate-900 overflow-hidden">
+              <img src="${place.img}" alt="${place.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80'">
+              <div class="absolute top-3 left-3 bg-midnight-950/80 backdrop-blur-md border border-midnight-800 text-white text-[10px] px-2 py-0.5 rounded-md font-light">
+                ${place.area}
+              </div>
+              <div class="absolute bottom-3 right-3 bg-midnight-950/80 backdrop-blur-md border border-midnight-800 text-accent-teal text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                <i data-lucide="star" class="w-3 h-3 fill-accent-teal text-accent-teal"></i> ${place.rating}
+              </div>
+            </div>
+
+            <!-- 텍스트 설명 영역 -->
+            <div class="p-5">
+              <h3 class="text-base font-semibold text-white group-hover:text-accent-teal transition mb-2">${place.title}</h3>
+              <p class="text-xs text-midnight-300 leading-relaxed line-clamp-2 font-light">${place.oneLine}</p>
+            </div>
+          </div>
+
+          <!-- 하단 정보 매칭용 태그 -->
+          <div class="px-5 pb-5 pt-0">
+            <div class="flex flex-wrap gap-1">
+              ${place.tagNames.map(tag => `<span class="bg-midnight-950 text-midnight-300 text-[9px] px-2 py-0.5 rounded border border-midnight-850">${tag}</span>`).join('')}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // 현재 자른 결과가 전체 필터링 결과보다 적으면 '더 보기' 버튼 노출
+      if (filtered.length > visibleLimit) {
+        loadMoreContainer.classList.remove('hidden');
+      } else {
+        loadMoreContainer.classList.add('hidden');
+      }
+
+      // 아이콘 업데이트
+      lucide.createIcons();
+    }
+
+    // 더 보기 클릭 핸들러
+    function loadMore() {
+      visibleLimit += PAGE_SIZE;
+      renderPlaces(currentFilter, document.getElementById('searchInput').value);
+    }
+
+    // 카테고리 필터 변경 제어
+    function filterCategory(category) {
+      currentFilter = category;
+      visibleLimit = PAGE_SIZE; // 필터 교체 시에는 보기 갯수를 다시 6개로 초기화
+      
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        const filter = btn.getAttribute('data-filter');
+        if (filter === category) {
+          btn.className = "filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-accent-teal text-midnight-950";
+        } else {
+          btn.className = "filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium transition bg-midnight-900 text-midnight-300 hover:text-white";
+        }
+      });
+
+      renderPlaces(category, document.getElementById('searchInput').value);
+    }
+
+    // 정렬 드롭다운 제어
+    function handleSortChange(value) {
+      currentSort = value;
+      // 정렬 기준이 바뀌었으므로, 한눈에 바뀐 순서 전체를 정렬하여 볼 수 있도록 6개 제한 초기화 해제 가능
+      // 여기서는 사용자가 보던 뷰 상태에서 정렬 기준만 정교하게 재조정하도록 합니다.
+      renderPlaces(currentFilter, document.getElementById('searchInput').value);
+    }
+
+    // 상단 퀵 숏컷 제어
+    function setSearch(value) {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.value = value;
+      visibleLimit = PAGE_SIZE; // 검색 키워드 변경 시에도 보기 갯수 초기화
+      renderPlaces(currentFilter, value);
+    }
+
+    // 필터 전부 초기화
+    function resetAllFilters() {
+      document.getElementById('searchInput').value = '';
+      visibleLimit = PAGE_SIZE; // 갯수 초기화
+      currentSort = 'latest'; // 정렬 기준 최신순 초기화
+      document.getElementById('sortSelect').value = 'latest';
+      filterCategory('all');
+      showToast("모든 검색 필터가 초기화되었습니다.");
+    }
+
+    // 모달창 팝업 제어
+    function openModal(id) {
+      const place = placesData.find(p => p.id === id);
+      if (!place) return;
+
+      document.getElementById('modalImg').src = place.img;
+      document.getElementById('modalImg').onerror = function() {
+        this.src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80";
+      };
+      document.getElementById('modalArea').textContent = place.area;
+      document.getElementById('modalRating').textContent = place.rating;
+      document.getElementById('modalTitle').textContent = place.title;
+      document.getElementById('modalOneLine').textContent = place.oneLine;
+      document.getElementById('modalReview').textContent = place.review;
+      document.getElementById('modalAddress').textContent = place.address;
+
+      const tagsContainer = document.getElementById('modalTags');
+      tagsContainer.innerHTML = place.tagNames.map(t => `<span>${t}</span>`).join(' ');
+
+      // 모달 열기 애니메이션 효과
+      const modal = document.getElementById('detailModal');
+      const content = document.getElementById('modalContent');
+      
+      modal.classList.remove('pointer-events-none', 'opacity-0');
+      modal.classList.add('opacity-100');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+
+      // 아이콘 갱신
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('detailModal');
+      const content = document.getElementById('modalContent');
+
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100');
+      content.classList.remove('scale-100');
+      content.classList.add('scale-95');
+    }
+
+    // 큐레이터 추가 모달 핸들링
+    function openCuratorModal() {
+      const modal = document.getElementById('curatorModal');
+      const content = document.getElementById('curatorModalContent');
+      
+      modal.classList.remove('pointer-events-none', 'opacity-0');
+      modal.classList.add('opacity-100');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+      lucide.createIcons();
+    }
+
+    function closeCuratorModal() {
+      const modal = document.getElementById('curatorModal');
+      const content = document.getElementById('curatorModalContent');
+
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100');
+      content.classList.remove('scale-100');
+      content.classList.add('scale-95');
+      document.getElementById('curatorForm').reset();
+    }
+
+    // 신규 큐레이션 서브밋 처리
+    function handleCuratorSubmit(event) {
+      event.preventDefault();
+      
+      const title = document.getElementById('addTitle').value.trim();
+      const area = document.getElementById('addArea').value.trim();
+      const rating = parseFloat(document.getElementById('addRating').value) || 5.0;
+      const oneLine = document.getElementById('addOneLine').value.trim();
+      const review = document.getElementById('addReview').value.trim();
+      const address = document.getElementById('addAddress').value.trim();
+      
+      // 태그 맵 변환
+      const checkedTags = Array.from(document.querySelectorAll('input[name="addTags"]:checked')).map(cb => cb.value);
+      if (checkedTags.length === 0) {
+        showToast("하나 이상의 추천 무드 태그를 선택해야 합니다.");
+        return;
+      }
+
+      // 태그의 노출용 매칭명 생성
+      const tagMap = {
+        work: "#조용한작업",
+        date: "#힙한데이트",
+        healing: "#아늑한쉼",
+        night: "#감각적혼술"
+      };
+      const tagNames = checkedTags.map(tag => tagMap[tag] || `#${tag}`);
+
+      // 사용자 커스텀 이미지 주소 없을 때 대체 이미지 처리
+      const userImg = document.getElementById('addImg').value.trim();
+      const defaultImgs = [
+        "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80"
+      ];
+      const img = userImg || defaultImgs[Math.floor(Math.random() * defaultImgs.length)];
+
+      const newPlace = {
+        id: Date.now(), // 고유 ID 부여
+        title,
+        area,
+        oneLine,
+        review,
+        tags: checkedTags,
+        tagNames,
+        rating: rating.toFixed(1),
+        img,
+        address
+      };
+
+      // 로컬스토리지 저장 체계
+      const stored = localStorage.getItem('chwyl_custom_places');
+      const customPlaces = stored ? JSON.parse(stored) : [];
+      customPlaces.unshift(newPlace); // 신규 등록 장소가 상단에 위치하도록 추가
+      
+      localStorage.setItem('chwyl_custom_places', JSON.stringify(customPlaces));
+
+      // 데이터 갱신 및 렌더링
+      initializeData();
+      renderPlaces(currentFilter, document.getElementById('searchInput').value);
+      
+      closeCuratorModal();
+      showToast(`'${title}'이(가) 신규 큐레이션 장소로 등록되었습니다.`);
+    }
+
+    // 커스텀 가상 보관함 기능 (alert 사용 금지 가이드 준수)
+    function bookmarkPlace() {
+      const title = document.getElementById('modalTitle').textContent;
+      closeModal();
+      showToast(`'${title}'이(가) 내 취향 보관함에 저장되었습니다.`);
+    }
+
+    // 자체 알림 메커니즘 (Toast UI)
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.textContent = msg;
+
+      toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3000);
+    }
+
+    // 이벤트 리스너 마운트
+    window.addEventListener('DOMContentLoaded', () => {
+      // 실시간 인풋 검색 바인딩
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        renderPlaces(currentFilter, e.target.value);
+      });
+
+      // 바깥 영역 클릭 시 모달 닫기
+      document.getElementById('detailModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('detailModal')) {
+          closeModal();
+        }
+      });
+
+      // 바깥 영역 클릭 시 큐레이터 모달 닫기
+      document.getElementById('curatorModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('curatorModal')) {
+          closeCuratorModal();
+        }
+      });
+
+      // 이스케이프 키 모달 바인딩
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+          closeCuratorModal();
+        }
+      });
+
+      // 기본 데이터 빌드 및 렌더링
+      initializeData();
+      renderPlaces();
+      lucide.createIcons();
+    });
+  </script>
+
+</body>
+</html>
