@@ -102,6 +102,10 @@
         </span>
       </div>
     </div>
+    <!-- 얇은 상단 스크롤 진행바 -->
+    <div class="absolute bottom-0 left-0 w-full h-[3px] bg-slate-200/40 dark:bg-midnight-900/40">
+      <div id="scrollProgressBar" class="h-full w-0 bg-slate-800 dark:bg-accent-teal transition-all duration-75"></div>
+    </div>
   </header>
 
   <!-- 메인 레이아웃 -->
@@ -534,18 +538,6 @@
         address: "서울 마포구 와우산로18길 32"
       },
       {
-        id: 9,
-        title: "혜화 ‘낙산의 파란 문’",
-        area: "종로구 동숭동",
-        oneLine: "낙산성곽길 끝자락에 위치하여 서울 도심 야경이 한눈에 들어오는 루프탑 티룸.",
-        review: "낮에는 따스한 햇살을, 밤에는 반짝이는 한양도성 성곽과 서울 야경을 동시에 누릴 수 있습니다. 자스민 티와 캐모마일 블렌딩 차가 시그니처이며, 연인들의 조용하고 무드 있는 고백 장소로 애용되는 숨은 명소입니다.",
-        tags: ["date", "healing"],
-        tagNames: ["#힙한데이트", "#아늑한쉼", "#야경"],
-        rating: "4.6",
-        img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
-        address: "서울 종로구 낙산성곽서길 83"
-      },
-      {
         id: 10,
         title: "문래 ‘철공소와 아틀리에’",
         area: "영등포구 문래동",
@@ -556,6 +548,18 @@
         rating: "4.5",
         img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80",
         address: "서울 영등포구 도림로129길 9"
+      },
+      {
+        id: 9,
+        title: "혜화 ‘낙산의 파란 문’",
+        area: "종로구 동숭동",
+        oneLine: "낙산성곽길 끝자락에 위치하여 서울 도심 야경이 한눈에 들어오는 루프탑 티룸.",
+        review: "낮에는 따스한 햇살을, 밤에는 반짝이는 한양도성 성곽과 서울 야경을 동시에 누릴 수 있습니다. 자스민 티와 캐모마일 블렌딩 차가 시그니처이며, 연인들의 조용하고 무드 있는 고백 장소로 애용되는 숨은 명소입니다.",
+        tags: ["date", "healing"],
+        tagNames: ["#힙한데이트", "#아늑한쉼", "#야경"],
+        rating: "4.6",
+        img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+        address: "서울 종로구 낙산성곽서길 83"
       },
       {
         id: 11,
@@ -625,13 +629,42 @@
       if (!iconContainer) return;
       
       if (isDark) {
-        // 다크 모드일 때는 해(Sun) 아이콘 노출하여 라이트 모드로의 전환 유도
         iconContainer.innerHTML = '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>';
       } else {
-        // 라이트 모드일 때는 달(Moon) 아이콘 노출하여 다크 모드로의 전환 유도
         iconContainer.innerHTML = '<i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>';
       }
       lucide.createIcons();
+    }
+
+    // [신규] 무작위 에모지 마우스 커서 생성기
+    function initEmojiCursor() {
+      const emojis = ['🍗', '☕', '📖', '🎵'];
+      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      // 고해상도 SVG 커서 마스크 제작 (Base64 인코딩)
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">${randomEmoji}</text></svg>`;
+      const base64Svg = btoa(unescape(encodeURIComponent(svg)));
+      
+      // 글로벌 CSS 인젝션 (성능 최적화 및 상속 보정)
+      const style = document.createElement('style');
+      style.id = "customEmojiCursorStyle";
+      style.innerHTML = `
+        body, a, button, select, input, textarea, label, [role="button"] {
+          cursor: url('data:image/svg+xml;base64,${base64Svg}') 4 24, auto !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // [신규] 실시간 상단 스크롤 진행바 트래킹
+    function updateScrollProgress() {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      const progressBar = document.getElementById('scrollProgressBar');
+      if (progressBar) {
+        progressBar.style.width = scrolled + '%';
+      }
     }
 
     // 데이터 초기화
@@ -932,6 +965,9 @@
       // 테마 초기 로드 설정
       initTheme();
 
+      // 무작위 에모지 커서 실행
+      initEmojiCursor();
+
       // 실시간 인풋 검색 바인딩
       document.getElementById('searchInput').addEventListener('input', (e) => {
         renderPlaces(currentFilter, e.target.value);
@@ -958,6 +994,10 @@
           closeCuratorModal();
         }
       });
+
+      // 스크롤 트래커 연동
+      window.addEventListener('scroll', updateScrollProgress);
+      updateScrollProgress();
 
       // 기본 데이터 빌드 및 렌더링
       initializeData();
