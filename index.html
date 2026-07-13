@@ -85,8 +85,8 @@
         <a href="#about" class="hover:text-slate-900 dark:hover:text-white transition">기획자 소개</a>
       </nav>
       <div class="flex items-center space-x-3">
-        <!-- 큐레이터 전용 추가 버튼 -->
-        <button onclick="openCuratorModal()" class="text-xs text-slate-600 hover:text-slate-900 dark:text-midnight-300 dark:hover:text-accent-teal transition flex items-center gap-1.5 mr-1">
+        <!-- 큐레이터 전용 추가 버튼 (기본 숨김: hidden 클래스 유지, 10번 탭 완료 시 해제) -->
+        <button id="curatorRegisterBtn" onclick="openCuratorModal()" class="hidden text-xs text-slate-600 hover:text-slate-900 dark:text-midnight-300 dark:hover:text-accent-teal transition flex items-center gap-1.5 mr-1">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           큐레이션 등록
         </button>
@@ -162,7 +162,8 @@
       <!-- 섹션 헤더 및 동적 필터 카테고리 -->
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-slate-200 dark:border-midnight-800/60">
         <div>
-          <h2 class="text-xl font-semibold tracking-tight text-slate-900 dark:text-white mb-1">나만의 안식처 찾기</h2>
+          <!-- [수정] 이스터에그 연동 h2 태그: 기획자의 의도에 맞게 모든 호버 및 특수 커서 클래스 제거 -->
+          <h2 onclick="handleSecretClick()" class="text-xl font-semibold tracking-tight text-slate-900 dark:text-white mb-1 select-none">나만의 안식처 찾기</h2>
           <p class="text-xs text-slate-500 dark:text-midnight-300 font-light">선택한 무드와 일치하는 공간을 필터링하여 확인해 보세요.</p>
         </div>
         
@@ -274,13 +275,13 @@
 
   <!-- 상세 보기 모달 레이아웃 (Vanilla JS 제어) -->
   <div id="detailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-midnight-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+    <div class="bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl" id="modalContent">
       
       <!-- 상단 이미지 배너 -->
       <div class="relative h-56 sm:h-64 bg-slate-800 overflow-hidden">
         <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
         <!-- 닫기 버튼 -->
-        <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 dark:bg-midnight-950/70 text-slate-800 dark:text-white rounded-full p-2 hover:scale-105 transition shadow-md">
+        <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 dark:bg-midnight-950/70 text-slate-800 dark:text-white rounded-full p-2 hover:scale-105 transition shadow-md z-10">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
         <!-- 검증 완료 보증 마크 -->
@@ -289,8 +290,8 @@
         </div>
       </div>
       
-      <!-- 상세 텍스트 정보 -->
-      <div class="p-6">
+      <!-- 상세 텍스트 정보 (FLIP 완성을 위해 ID 바인딩 완료) -->
+      <div class="p-6 transition-all duration-300 opacity-0 transform translate-y-4" id="modalTextContainer">
         <div class="flex items-center justify-between mb-2">
           <span id="modalArea" class="text-xs text-slate-500 dark:text-accent-teal font-medium tracking-wide"></span>
           <div class="flex items-center space-x-1">
@@ -538,6 +539,18 @@
         address: "서울 마포구 와우산로18길 32"
       },
       {
+        id: 10,
+        title: "문래 ‘철공소와 아틀리에’",
+        area: "영등포구 문래동",
+        oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
+        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이룹니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
+        tags: ["work", "night"],
+        tagNames: ["#조용한작업", "#감각적혼술", "#인더스트리얼"],
+        rating: "4.5",
+        img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80",
+        address: "서울 영등포구 도림로129길 9"
+      },
+      {
         id: 9,
         title: "혜화 ‘낙산의 파란 문’",
         area: "종로구 동숭동",
@@ -548,18 +561,6 @@
         rating: "4.6",
         img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
         address: "서울 종로구 낙산성곽서길 83"
-      },
-      {
-        id: 10,
-        title: "문래 ‘철공소와 아틀리에’",
-        area: "영등포구 문래동",
-        oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
-        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이화를 이룹니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
-        tags: ["work", "night"],
-        tagNames: ["#조용한작업", "#감각적혼술", "#인더스트리얼"],
-        rating: "4.5",
-        img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80",
-        address: "서울 영등포구 도림로129길 9"
       },
       {
         id: 11,
@@ -666,7 +667,6 @@
       const base64Normal = btoa(unescape(encodeURIComponent(svgNormal)));
 
       // 2. 호버용 SVG 커서 (15도 기울어짐)
-      // 로컬 축 중심점인 (22, 16)을 기점으로 15도 정밀 회전 연산 적용
       const svgHover = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="font-size:20px">
         <circle cx="4" cy="4" r="2.5" fill="${dotColor}" stroke="${strokeColor}" stroke-width="0.8"/>
         <text y="6" x="12" dominant-baseline="hanging" transform="rotate(15 22 16)">${activeEmoji}</text>
@@ -702,6 +702,35 @@
       }
     }
 
+    // [이스터 에그] "나만의 안식처 찾기" 연속 10회 탭 핸들링 로직
+    let secretClickCount = 0;
+    let secretClickTimeout;
+
+    function handleSecretClick() {
+      secretClickCount++;
+      clearTimeout(secretClickTimeout);
+
+      if (secretClickCount >= 10) {
+        secretClickCount = 0;
+        
+        // 큐레이션 등록 창(모달) 즉시 출력
+        openCuratorModal();
+        
+        // 숨겨두었던 큐레이션 등록 버튼 영구 해제 노출
+        const registerBtn = document.getElementById('curatorRegisterBtn');
+        if (registerBtn) {
+          registerBtn.classList.remove('hidden');
+        }
+        
+        showToast("🔓 비밀 큐레이터 모드가 활성화되었습니다!");
+      } else {
+        // 2초 안에 누르지 않으면 누적 횟수 초기화
+        secretClickTimeout = setTimeout(() => {
+          secretClickCount = 0;
+        }, 2000);
+      }
+    }
+
     // 데이터 초기화
     function initializeData() {
       const stored = localStorage.getItem('chwyl_custom_places');
@@ -713,7 +742,7 @@
       });
     }
 
-    // 장소 리스트 렌더링 로직
+    // 장소 리스트 렌더링 로직 (카드 클릭 핸들러에 'this' 매개변수 이식 완료)
     function renderPlaces(filter = 'all', searchQuery = '') {
       const grid = document.getElementById('placesGrid');
       const loadMoreContainer = document.getElementById('loadMoreContainer');
@@ -761,8 +790,10 @@
 
       sliced.forEach(place => {
         const card = document.createElement('div');
+        // FLIP을 위한 고유 ID 부여 및 openModal에 'this' 전달
+        card.id = `place-card-${place.id}`;
         card.className = "bg-white dark:bg-midnight-900 border border-slate-200/60 dark:border-midnight-850 hover:border-slate-400 dark:hover:border-midnight-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md dark:shadow-lg hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer group";
-        card.setAttribute('onclick', `openModal(${place.id})`);
+        card.setAttribute('onclick', `openModal(${place.id}, this)`);
         
         card.innerHTML = `
           <div>
@@ -851,11 +882,16 @@
       showToast("모든 검색 필터가 초기화되었습니다.");
     }
 
-    // 모달창 팝업 제어
-    function openModal(id) {
+    // 모달창 팝업 제어 (FLIP 애니메이션 패턴 탑재 완료)
+    function openModal(id, cardElement) {
       const place = placesData.find(p => p.id === id);
       if (!place) return;
 
+      const modal = document.getElementById('detailModal');
+      const content = document.getElementById('modalContent');
+      const textContainer = document.getElementById('modalTextContainer');
+
+      // 1. 정보 주입
       document.getElementById('modalImg').src = place.img;
       document.getElementById('modalImg').onerror = function() {
         this.src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80";
@@ -870,25 +906,66 @@
       const tagsContainer = document.getElementById('modalTags');
       tagsContainer.innerHTML = place.tagNames.map(t => `<span>${t}</span>`).join(' ');
 
-      const modal = document.getElementById('detailModal');
-      const content = document.getElementById('modalContent');
-      
+      lucide.createIcons();
+
+      // 2. 텍스트 정보 박스 초기화
+      textContainer.style.transition = 'none';
+      textContainer.style.opacity = '0';
+      textContainer.style.transform = 'translateY(16px)';
+
+      // 3. 모달 오버레이 배경 노출
       modal.classList.remove('pointer-events-none', 'opacity-0');
       modal.classList.add('opacity-100');
-      content.classList.remove('scale-95');
-      content.classList.add('scale-100');
 
-      lucide.createIcons();
+      if (cardElement) {
+        // [FLIP 기법 적용 영역]
+        const firstRect = cardElement.getBoundingClientRect();
+
+        content.style.transition = 'none';
+        content.style.transformOrigin = 'top left';
+
+        const lastRect = content.getBoundingClientRect();
+
+        const scaleX = firstRect.width / lastRect.width;
+        const scaleY = firstRect.height / lastRect.height;
+        const translateX = firstRect.left - lastRect.left;
+        const translateY = firstRect.top - lastRect.top;
+
+        content.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+        content.offsetHeight; // Reflow 강제
+
+        content.style.transition = 'transform 0.48s cubic-bezier(0.16, 1, 0.3, 1)';
+        content.style.transform = 'translate(0, 0) scale(1)';
+
+        setTimeout(() => {
+          textContainer.style.transition = 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+          textContainer.style.opacity = '1';
+          textContainer.style.transform = 'translateY(0)';
+        }, 360);
+      } else {
+        content.style.transition = 'transform 0.3s ease';
+        content.style.transform = 'scale(1)';
+        textContainer.style.opacity = '1';
+        textContainer.style.transform = 'translateY(0)';
+      }
     }
 
+    // 모달 닫기
     function closeModal() {
       const modal = document.getElementById('detailModal');
       const content = document.getElementById('modalContent');
+      const textContainer = document.getElementById('modalTextContainer');
 
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      modal.classList.remove('opacity-100');
-      content.classList.remove('scale-100');
-      content.classList.add('scale-95');
+      textContainer.style.transition = 'opacity 0.15s ease';
+      textContainer.style.opacity = '0';
+
+      content.style.transition = 'transform 0.25s ease-in';
+      content.style.transform = 'scale(0.96)';
+
+      setTimeout(() => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.classList.remove('opacity-100');
+      }, 100);
     }
 
     // 큐레이터 추가 모달 핸들링
@@ -903,6 +980,7 @@
       lucide.createIcons();
     }
 
+    // 큐레이터 모달 닫기
     function closeCuratorModal() {
       const modal = document.getElementById('curatorModal');
       const content = document.getElementById('curatorModalContent');
