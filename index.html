@@ -412,7 +412,7 @@
       <!-- 모달 푸터 액션 -->
       <div class="p-4 sm:p-5 border-t border-slate-200 dark:border-midnight-800 flex gap-2 bg-slate-50 dark:bg-midnight-950/20 flex-shrink-0">
         <button onclick="closeCuratorModal()" class="w-1/3 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-midnight-800 dark:hover:bg-midnight-700 dark:text-white rounded-lg transition text-xs font-medium">닫기</button>
-        <button type="submit" form="curatorForm" class="w-2/3 py-2.5 bg-slate-900 hover:bg-slate-800 text-white dark:bg-accent-teal dark:text-midnight-950 rounded-lg transition text-xs font-bold shadow-md">큐레이션 정식 등록</button>
+        <button type="submit" id="curatorSubmitBtn" form="curatorForm" class="w-2/3 py-2.5 bg-slate-900 hover:bg-slate-800 text-white dark:bg-accent-teal dark:text-midnight-950 rounded-lg transition text-xs font-bold shadow-md">큐레이션 정식 등록</button>
       </div>
     </div>
   </div>
@@ -581,7 +581,7 @@
         title: "신록의 숨바꼭질",
         area: "서대문구 창천동",
         oneLine: "도심 한복판 빌딩 숲 사이에 완벽히 은폐된 온실 속 보타닉 에스테틱 하우스.",
-        review: "수천 그루의 식물이 매장을 감싸 안고 있어 자연 피톤치드 향이 은은하게 퍼집니다. 커피 외에 말차 라떼가 훌륭하며 테이블 간격이 엄청나게 넓어 프라이버시가 극대화되는 도심 속의 또 다른 숲속 정원입니다.",
+        review: "수천 그루 of 식물이 매장을 감싸 안고 있어 자연 피톤치드 향이 은은하게 퍼집니다. 커피 외에 말차 라떼가 훌륭하며 테이블 간격이 엄청나게 넓어 프라이버시가 극대화되는 도심 속의 또 다른 숲속 정원입니다.",
         tags: ["date", "healing"],
         tagNames: ["#힙한데이트", "#아늑한쉼", "#식물카페"],
         rating: "4.7",
@@ -1063,7 +1063,7 @@
       };
 
       // 제출 중 UI 블로킹 처리
-      const submitBtn = event.target.querySelector('button[type="submit"]');
+      const submitBtn = document.getElementById('curatorSubmitBtn');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = "클라우드 등록 중...";
       submitBtn.disabled = true;
