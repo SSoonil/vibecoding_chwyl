@@ -321,7 +321,7 @@
 
         <div class="flex gap-2">
           <button onclick="closeModal()" class="w-full py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-midnight-800 dark:hover:bg-midnight-700 dark:text-white rounded-lg text-xs font-medium transition">닫기</button>
-          <button onclick="bookmarkPlace()" class="py-2.5 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 dark:bg-midnight-900 dark:border-midnight-800 dark:hover:border-midnight-700 dark:text-white rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 shadow-sm">
+          <button onclick="bookmarkPlace()" class="py-2.5 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 dark:bg-midnight-900 border-midnight-800 dark:hover:border-midnight-700 dark:text-white rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 shadow-sm">
             <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> 보관
           </button>
         </div>
@@ -538,18 +538,6 @@
         address: "서울 마포구 와우산로18길 32"
       },
       {
-        id: 10,
-        title: "문래 ‘철공소와 아틀리에’",
-        area: "영등포구 문래동",
-        oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
-        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이룹니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
-        tags: ["work", "night"],
-        tagNames: ["#조용한작업", "#감각적혼술", "#인더스트리얼"],
-        rating: "4.5",
-        img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80",
-        address: "서울 영등포구 도림로129길 9"
-      },
-      {
         id: 9,
         title: "혜화 ‘낙산의 파란 문’",
         area: "종로구 동숭동",
@@ -560,6 +548,18 @@
         rating: "4.6",
         img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
         address: "서울 종로구 낙산성곽서길 83"
+      },
+      {
+        id: 10,
+        title: "문래 ‘철공소와 아틀리에’",
+        area: "영등포구 문래동",
+        oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
+        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이화를 이룹니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
+        tags: ["work", "night"],
+        tagNames: ["#조용한작업", "#감각적혼술", "#인더스트리얼"],
+        rating: "4.5",
+        img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80",
+        address: "서울 영등포구 도림로129길 9"
       },
       {
         id: 11,
@@ -605,6 +605,8 @@
         document.documentElement.classList.remove('dark');
         updateThemeIcon(false);
       }
+      // 초기 테마 로드 시 커서 색상 동기화
+      updateEmojiCursor();
     }
 
     function toggleTheme() {
@@ -622,6 +624,8 @@
         updateThemeIcon(true);
         showToast("눈이 편안한 미드나잇 다크 모드가 켜졌습니다.");
       }
+      // 테마 변경 시 커서 조준점 색상 동적 갱신
+      updateEmojiCursor();
     }
 
     function updateThemeIcon(isDark) {
@@ -636,24 +640,55 @@
       lucide.createIcons();
     }
 
-    // [신규] 무작위 에모지 마우스 커서 생성기
+    let activeEmoji = '';
+
+    // 무작위 에모지 마우스 커서 생성기
     function initEmojiCursor() {
       const emojis = ['🍗', '☕', '📖', '🎵'];
-      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      activeEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      updateEmojiCursor();
+    }
+
+    // 테마 상태를 감지하여 조준점 색상을 재생성하는 렌더러 (15도 회전 호버 액션 탑재)
+    function updateEmojiCursor() {
+      if (!activeEmoji) return;
+      const isDark = document.documentElement.classList.contains('dark');
       
-      // 고해상도 SVG 커서 마스크 제작 (Base64 인코딩)
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">${randomEmoji}</text></svg>`;
-      const base64Svg = btoa(unescape(encodeURIComponent(svg)));
+      // 다크모드일 땐 백색(#ffffff), 라이트모드일 땐 흑색(#000000)
+      const dotColor = isDark ? '#ffffff' : '#000000';
+      const strokeColor = isDark ? '#000000' : '#ffffff';
       
-      // 글로벌 CSS 인젝션 (성능 최적화 및 상속 보정)
-      const style = document.createElement('style');
-      style.id = "customEmojiCursorStyle";
+      // 1. 기본 SVG 커서 (0도 회전)
+      const svgNormal = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="font-size:20px">
+        <circle cx="4" cy="4" r="2.5" fill="${dotColor}" stroke="${strokeColor}" stroke-width="0.8"/>
+        <text y="6" x="12" dominant-baseline="hanging" transform="rotate(0 22 16)">${activeEmoji}</text>
+      </svg>`;
+      const base64Normal = btoa(unescape(encodeURIComponent(svgNormal)));
+
+      // 2. 호버용 SVG 커서 (15도 기울어짐)
+      // 로컬 축 중심점인 (22, 16)을 기점으로 15도 정밀 회전 연산 적용
+      const svgHover = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="font-size:20px">
+        <circle cx="4" cy="4" r="2.5" fill="${dotColor}" stroke="${strokeColor}" stroke-width="0.8"/>
+        <text y="6" x="12" dominant-baseline="hanging" transform="rotate(15 22 16)">${activeEmoji}</text>
+      </svg>`;
+      const base64Hover = btoa(unescape(encodeURIComponent(svgHover)));
+      
+      let style = document.getElementById('customEmojiCursorStyle');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = "customEmojiCursorStyle";
+        document.head.appendChild(style);
+      }
       style.innerHTML = `
-        body, a, button, select, input, textarea, label, [role="button"] {
-          cursor: url('data:image/svg+xml;base64,${base64Svg}') 4 24, auto !important;
+        /* 기본 상태 */
+        body, a, button, select, input, textarea, label, [role="button"], .group, .cursor-pointer {
+          cursor: url('data:image/svg+xml;base64,${base64Normal}') 4 4, auto;
+        }
+        /* 호버 상호작용 지점 - 15도 기울어진 벡터 대체 */
+        a:hover, button:hover, select:hover, input:hover, textarea:hover, label:hover, [role="button"]:hover, .group:hover, .cursor-pointer:hover {
+          cursor: url('data:image/svg+xml;base64,${base64Hover}') 4 4, auto !important;
         }
       `;
-      document.head.appendChild(style);
     }
 
     // [신규] 실시간 상단 스크롤 진행바 트래킹
