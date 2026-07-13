@@ -1,10 +1,9 @@
 /**
- * CHWYL 취향지도 Netlify Serverless API Bridge
+ * CHWYL 취향지도 Netlify Serverless API Bridge (댓글 기능 패치 버전)
  * GitHub Discussions GraphQL API를 프록시 중계하여 
  * 보안 토큰 노출 없이 안전하게 CRUD 기능을 수행합니다.
  */
 
-// Node 18+ 글로벌 fetch 지원 환경 기준
 exports.handler = async function (event, context) {
   // CORS 처리 및 기본 응답 헤더 설정
   const headers = {
@@ -51,7 +50,6 @@ exports.handler = async function (event, context) {
   try {
     // === [기능 1] GET: 장소 리스트 불러오기 ===
     if (method === 'GET' && action === 'getPlaces') {
-      // 1) Repository ID 및 "Places" 카테고리 ID 찾기
       const repoInfo = await fetchGitHub(
         `query($owner: String!, $name: String!) {
           repository(owner: $owner, name: $name) {
@@ -81,7 +79,7 @@ exports.handler = async function (event, context) {
         };
       }
 
-      // 2) Places 카테고리의 토론글 100개 불러오기
+      // Places 카테고리의 토론글 100개 불러오기
       const discussionsData = await fetchGitHub(
         `query($owner: String!, $name: String!, $categoryId: ID!) {
           repository(owner: $owner, name: $name) {
@@ -100,7 +98,7 @@ exports.handler = async function (event, context) {
 
       const discussions = discussionsData.repository.discussions.nodes;
 
-      // 3) 마크다운 본문의 Frontmatter 파싱하여 JSON 변환
+      // 마크다운 본문의 Frontmatter 파싱하여 JSON 변환
       const formattedPlaces = discussions.map(node => {
         const parsed = parseFrontmatter(node.body);
         const tags = parsed.metadata.tags || [];
@@ -113,7 +111,7 @@ exports.handler = async function (event, context) {
         const tagNames = tags.map(t => tagMap[t] || `#${t}`);
 
         return {
-          id: node.id, // GitHub ID 직접 사용 (상세보기 매핑용)
+          id: node.id, 
           title: node.title,
           area: parsed.metadata.area || "서울시",
           oneLine: parsed.metadata.oneLine || "큐레이터가 엄선한 고유의 공간",
@@ -134,7 +132,7 @@ exports.handler = async function (event, context) {
       };
     }
 
-    // === [기능 2] POST: 새 장소 등록 (큐레이터 전용) ===
+    // === [기능 2] POST: 새 장소 등록 ===
     if (method === 'POST' && action === 'createPlace') {
       const bodyParams = JSON.parse(event.body || '{}');
       const { title, area, oneLine, review, tags, rating, img, address } = bodyParams;
@@ -147,7 +145,6 @@ exports.handler = async function (event, context) {
         };
       }
 
-      // 1) Repository ID 및 Category ID 획득
       const repoInfo = await fetchGitHub(
         `query($owner: String!, $name: String!) {
           repository(owner: $owner, name: $name) {
@@ -175,7 +172,6 @@ exports.handler = async function (event, context) {
         };
       }
 
-      // 2) 본문에 담을 마크다운 Frontmatter 구성
       const discussionBody = `---
 area: "${area}"
 oneLine: "${oneLine}"
@@ -186,7 +182,6 @@ address: "${address}"
 ---
 ${review}`;
 
-      // 3) Discussion 생성 뮤테이션 실행
       const mutationResult = await fetchGitHub(
         `mutation($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) {
           createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, title: $title, body: $body}) {
@@ -243,13 +238,12 @@ ${review}`;
 
       const rawComments = commentsData.node.comments.nodes;
 
-      // 댓글 파싱 [RATING:5.0] 형식 해석
+      // [AUTHOR:닉네임] 본문 형식 파싱
       const parsedComments = rawComments.map(c => {
-        const match = c.body.match(/^\[RATING:([\d.]+)\]\s*([\s\S]*)$/);
+        const match = c.body.match(/^\[AUTHOR:([^\]]+)\]\s*([\s\S]*)$/);
         return {
           id: c.id,
-          author: c.author ? c.author.login : "익명 큐레이터",
-          rating: match ? match[1] : null,
+          author: match ? match[1].trim() : (c.author ? c.author.login : "익명 큐레이터"),
           text: match ? match[2].trim() : c.body,
           createdAt: c.createdAt
         };
@@ -262,17 +256,17 @@ ${review}`;
       };
     }
 
-    // === [기능 4] POST: 장소별 댓글 및 평점 남기기 ===
+    // === [기능 4] POST: 장소별 닉네임 기반 무점수 댓글 남기기 ===
     if (method === 'POST' && action === 'createComment') {
       const bodyParams = JSON.parse(event.body || '{}');
-      const { discussionId, rating, text } = bodyParams;
+      const { discussionId, nickname, text } = bodyParams;
 
-      if (!discussionId || !rating || !text) {
+      if (!discussionId || !nickname || !text) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: "필수 인자가 누락되었습니다." }) };
       }
 
-      // 평점 태그를 머리에 얹어서 댓글에 저장
-      const formattedComment = `[RATING:${parseFloat(rating).toFixed(1)}] ${text}`;
+      // 데이터 규격화 및 마킹
+      const formattedComment = `[AUTHOR:${nickname}] ${text}`;
 
       const mutationResult = await fetchGitHub(
         `mutation($discussionId: ID!, $body: String!) {
@@ -296,25 +290,21 @@ ${review}`;
       };
     }
 
-    // 일치하는 액션이 없는 경우
     return {
       statusCode: 404,
       headers,
-      body: JSON.stringify({ error: "올바르지 않은 API 액션 요청입니다." })
+      body: JSON.stringify({ error: "올바르지 않은 API 요청입니다." })
     };
 
   } catch (error) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: error.message || "서버 통신 중 원인 모를 예외가 발생했습니다." })
+      body: JSON.stringify({ error: error.message || "서버 예외가 발생했습니다." })
     };
   }
 };
 
-/**
- * GitHub GraphQL API 요청 전송 공용 헬퍼 함수
- */
 async function fetchGitHub(query, variables = {}) {
   const response = await fetch('https://api.github.com/graphql', {
     method: 'POST',
@@ -328,14 +318,11 @@ async function fetchGitHub(query, variables = {}) {
 
   const result = await response.json();
   if (result.errors) {
-    throw new Error(`GitHub GraphQL API Error: ${result.errors.map(e => e.message).join(', ')}`);
+    throw new Error(`GitHub API 에러: ${result.errors.map(e => e.message).join(', ')}`);
   }
   return result.data;
 }
 
-/**
- * 마크다운 본문의 Frontmatter를 정규식으로 안전하게 파싱하는 헬퍼 함수
- */
 function parseFrontmatter(body) {
   const match = body.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!match) return { metadata: {}, content: body };
@@ -350,12 +337,10 @@ function parseFrontmatter(body) {
       const key = parts[0].trim();
       let value = parts.slice(1).join(':').trim();
 
-      // 양 끝 따옴표 제거
       if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
         value = value.slice(1, -1);
       }
 
-      // JSON 배열 파싱 예: ["work", "healing"]
       if (value.startsWith('[') && value.endsWith(']')) {
         try {
           metadata[key] = JSON.parse(value.replace(/'/g, '"'));

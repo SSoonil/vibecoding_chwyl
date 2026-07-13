@@ -16,7 +16,7 @@
 
   <script>
     tailwind.config = {
-      darkMode: 'class', // 수동 클래스 기반 라이트/다크모드 지원 설정
+      darkMode: 'class', 
       theme: {
         extend: {
           fontFamily: {
@@ -46,7 +46,6 @@
       font-family: 'Pretendard', sans-serif;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
-    /* 스크롤바 커스텀 */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -85,7 +84,7 @@
         <a href="#about" class="hover:text-slate-900 dark:hover:text-white transition">기획자 소개</a>
       </nav>
       <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- 큐레이터 전용 추가 버튼 (기본 숨김, 이스터에그 발동 시 해제) -->
+        <!-- 큐레이터 전용 추가 버튼 -->
         <button id="curatorRegisterBtn" onclick="openCuratorModal()" class="hidden text-xs text-slate-600 hover:text-slate-900 dark:text-midnight-300 dark:hover:text-accent-teal transition flex items-center gap-1.5 mr-1 py-1 px-2 rounded-lg">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           <span class="hidden xs:inline">큐레이션 </span>등록
@@ -102,7 +101,7 @@
         </span>
       </div>
     </div>
-    <!-- 얇은 상단 스크롤 진행바 -->
+    <!-- 상단 스크롤 진행바 -->
     <div class="absolute bottom-0 left-0 w-full h-[3px] bg-slate-200/40 dark:bg-midnight-900/40">
       <div id="scrollProgressBar" class="h-full w-0 bg-slate-800 dark:bg-accent-teal transition-all duration-75"></div>
     </div>
@@ -115,17 +114,15 @@
     <section class="relative py-12 sm:py-20 lg:py-32 overflow-hidden border-b border-slate-200 dark:border-midnight-800/40 bg-slate-100/30 dark:bg-transparent">
       <div class="absolute inset-0 bg-gradient-to-b from-slate-200/20 dark:from-midnight-900/40 to-transparent pointer-events-none"></div>
       
-      <!-- 데코레이션 백그라운드 구형 그래디언트 -->
+      <!-- 데코레이션 백그라운드 -->
       <div class="absolute -top-40 -left-40 w-96 h-96 bg-slate-200 dark:bg-midnight-800/30 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-slate-200 dark:bg-accent-teal/5 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
-        <!-- 뱃지 -->
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200/50 dark:bg-midnight-800/60 border border-slate-300/40 dark:border-midnight-700/60 text-xs text-slate-600 dark:text-midnight-300 mb-4 sm:mb-6 uppercase tracking-widest">
           <i data-lucide="compass" class="w-3.5 h-3.5 text-slate-500 dark:text-accent-teal"></i> Real Taste Map
         </div>
         
-        <!-- 캐치프레이즈 -->
         <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4 sm:mb-6 text-slate-900 dark:text-white px-2">
           헤매지 않는 여정, <br class="xs:hidden">
           <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:via-slate-200 dark:to-midnight-300">
@@ -162,7 +159,6 @@
       <!-- 섹션 헤더 및 동적 필터 카테고리 -->
       <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 pb-4 border-b border-slate-200 dark:border-midnight-800/60">
         <div>
-          <!-- 이스터에그 연동 h2 태그 -->
           <h2 onclick="handleSecretClick()" class="text-lg sm:text-xl font-semibold tracking-tight text-slate-900 dark:text-white mb-1 select-none">나만의 안식처 찾기</h2>
           <p class="text-xs text-slate-500 dark:text-midnight-300 font-light">선택한 무드와 일치하는 공간을 필터링하여 확인해 보세요.</p>
         </div>
@@ -177,7 +173,7 @@
         </div>
       </div>
 
-      <!-- 리스트 결과 상태 표시 (정렬 토글 탑재) -->
+      <!-- 리스트 결과 상태 표시 -->
       <div id="resultsCount" class="text-xs text-slate-500 dark:text-midnight-300 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-100/50 dark:bg-midnight-900/10 p-3 rounded-lg sm:p-0 sm:bg-transparent">
         <div class="flex items-center gap-2.5">
           <span>엄선된 장소 <strong class="text-slate-900 dark:text-white" id="countNum">0</strong>개 발견</span>
@@ -220,7 +216,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          <!-- 원칙 1 -->
           <div class="bg-white dark:bg-midnight-900/60 p-6 rounded-xl border border-slate-200 dark:border-midnight-800/80 hover:border-slate-300 dark:hover:border-midnight-700/60 transition group">
             <div class="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
               <i data-lucide="shield-check" class="w-5 h-5"></i>
@@ -231,7 +226,6 @@
             </p>
           </div>
 
-          <!-- 원칙 2 -->
           <div class="bg-white dark:bg-midnight-900/60 p-6 rounded-xl border border-slate-200 dark:border-midnight-800/80 hover:border-slate-300 dark:hover:border-midnight-700/60 transition group">
             <div class="w-10 h-10 rounded-lg bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-accent-teal flex items-center justify-center mb-4 group-hover:scale-110 transition">
               <i data-lucide="hash" class="w-5 h-5"></i>
@@ -242,7 +236,6 @@
             </p>
           </div>
 
-          <!-- 원칙 3 -->
           <div class="bg-white dark:bg-midnight-900/60 p-6 rounded-xl border border-slate-200 dark:border-midnight-800/80 hover:border-slate-300 dark:hover:border-midnight-700/60 transition group">
             <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-500 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
               <i data-lucide="align-left" class="w-5 h-5"></i>
@@ -273,43 +266,43 @@
 
   </main>
 
-  <!-- 상세 보기 모달 레이아웃 -->
+  <!-- 상세 보기 모달 레이아웃 (댓글 리스트 및 인풋 탑재) -->
   <div id="detailModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 dark:bg-midnight-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl max-h-[92vh] flex flex-col" id="modalContent">
+    <div class="bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl max-h-[95vh] flex flex-col" id="modalContent">
       
       <!-- 상단 이미지 배너 -->
-      <div class="relative h-48 sm:h-56 md:h-64 bg-slate-800 overflow-hidden flex-shrink-0">
+      <div class="relative h-40 sm:h-48 md:h-52 bg-slate-800 overflow-hidden flex-shrink-0">
         <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
         <!-- 닫기 버튼 -->
         <button onclick="closeModal()" class="absolute top-3 right-3 bg-white/90 dark:bg-midnight-950/80 text-slate-800 dark:text-white rounded-full p-2.5 hover:scale-105 transition shadow-md z-10" aria-label="닫기">
           <i data-lucide="x" class="w-4.5 h-4.5"></i>
         </button>
-        <!-- 검증 완료 보증 마크 -->
         <div class="absolute bottom-3 left-3 bg-slate-900 text-white dark:bg-accent-teal dark:text-midnight-950 text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider flex items-center gap-1 shadow-sm">
           <i data-lucide="badge-check" class="w-3.5 h-3.5"></i> VERIFIED PICK
         </div>
       </div>
       
-      <!-- 상세 텍스트 정보 -->
-      <div class="p-5 sm:p-6 overflow-y-auto flex-grow transition-all duration-300 opacity-0 transform translate-y-4" id="modalTextContainer">
-        <div class="flex items-center justify-between mb-2">
-          <span id="modalArea" class="text-[11px] sm:text-xs text-slate-500 dark:text-accent-teal font-medium tracking-wide"></span>
-          <div class="flex items-center space-x-1">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-500 dark:fill-accent-teal dark:text-accent-teal"></i>
-            <span id="modalRating" class="text-xs font-bold text-slate-800 dark:text-white"></span>
+      <!-- 상세 텍스트 정보 및 댓글 바디 -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-grow transition-all duration-300 opacity-0 transform translate-y-4 space-y-4" id="modalTextContainer">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span id="modalArea" class="text-[11px] sm:text-xs text-slate-500 dark:text-accent-teal font-medium tracking-wide"></span>
+            <div class="flex items-center space-x-1">
+              <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-500 dark:fill-accent-teal dark:text-accent-teal"></i>
+              <span id="modalRating" class="text-xs font-bold text-slate-800 dark:text-white"></span>
+            </div>
+          </div>
+          
+          <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2.5"></h3>
+          
+          <div class="bg-slate-50 dark:bg-midnight-950/50 rounded-lg p-3 border-l-2 border-slate-800 dark:border-accent-teal">
+            <span class="text-[9px] sm:text-[10px] text-slate-400 dark:text-accent-teal block font-semibold mb-1 uppercase tracking-widest">Core Summary</span>
+            <p id="modalOneLine" class="text-xs text-slate-800 dark:text-white font-medium leading-relaxed"></p>
           </div>
         </div>
-        
-        <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3"></h3>
-        
-        <!-- 한 줄 요약 부각 -->
-        <div class="bg-slate-50 dark:bg-midnight-950/50 rounded-lg p-3 border-l-2 border-slate-800 dark:border-accent-teal mb-4">
-          <span class="text-[9px] sm:text-[10px] text-slate-400 dark:text-accent-teal block font-semibold mb-1 uppercase tracking-widest">Core Summary</span>
-          <p id="modalOneLine" class="text-xs text-slate-800 dark:text-white font-medium leading-relaxed"></p>
-        </div>
 
-        <div class="space-y-3 text-xs text-slate-600 dark:text-midnight-300 font-light mb-6">
-          <p id="modalReview" class="leading-relaxed border-b border-slate-100 dark:border-midnight-800 pb-3"></p>
+        <div class="space-y-3 text-xs text-slate-600 dark:text-midnight-300 font-light border-b border-slate-100 dark:border-midnight-800/80 pb-3">
+          <p id="modalReview" class="leading-relaxed"></p>
           <div class="flex items-center gap-2">
             <span class="text-[9px] sm:text-[10px] text-slate-400 dark:text-midnight-300 uppercase font-bold w-12 flex-shrink-0">추천 무드</span>
             <span id="modalTags" class="text-[10px] flex flex-wrap gap-1 text-slate-800 dark:text-accent-teal font-medium"></span>
@@ -320,7 +313,32 @@
           </div>
         </div>
 
-        <div class="flex gap-2">
+        <!-- 피드백 섹션 -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+            <i data-lucide="message-square" class="w-3.5 h-3.5 text-slate-500 dark:text-accent-teal"></i>
+            방문자 피드백 <span id="commentCount" class="text-[10px] text-slate-400 dark:text-midnight-300 font-normal">(0)</span>
+          </h4>
+
+          <!-- 댓글 목록 콘텐터 -->
+          <div id="commentList" class="space-y-2 max-h-36 overflow-y-auto mb-2 pr-1 scroll-smooth">
+            <!-- 동적 이식 -->
+          </div>
+
+          <!-- 댓글 등록 폼 -->
+          <div class="bg-slate-100/50 dark:bg-midnight-950/40 border border-slate-200/60 dark:border-midnight-800/80 p-2.5 rounded-lg space-y-2">
+            <div class="flex gap-2">
+              <input type="text" id="commentNickname" placeholder="닉네임" required
+                class="w-1/3 bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-md p-1.5 text-[11px] text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition-all">
+              <input type="text" id="commentText" placeholder="따뜻한 사색의 조각을 더해보세요." required
+                class="w-2/3 bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-md p-1.5 text-[11px] text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition-all">
+              <button onclick="submitComment()" id="commentSubmitBtn"
+                class="px-3 bg-slate-900 hover:bg-slate-800 dark:bg-accent-teal dark:text-midnight-950 text-white rounded-md text-[11px] font-bold transition flex-shrink-0">등록</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-2">
           <button onclick="closeModal()" class="w-full py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-midnight-800 dark:hover:bg-midnight-700 dark:text-white rounded-lg text-xs font-medium transition">닫기</button>
           <button onclick="bookmarkPlace()" class="py-2.5 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 dark:bg-midnight-900 border-midnight-800 dark:hover:border-midnight-700 dark:text-white rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 shadow-sm flex-shrink-0">
             <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> 보관
@@ -334,8 +352,6 @@
   <!-- 큐레이터 전용 신규 장소 등록 모달 -->
   <div id="curatorModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 dark:bg-midnight-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="bg-white dark:bg-midnight-900 border border-slate-200 dark:border-midnight-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl max-h-[92vh] flex flex-col" id="curatorModalContent">
-      
-      <!-- 모달 헤더 -->
       <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-midnight-800 flex justify-between items-center bg-slate-50 dark:bg-midnight-950/30 flex-shrink-0">
         <h3 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
           <i data-lucide="pen-tool" class="w-4 h-4 text-slate-600 dark:text-accent-teal"></i> 독립 큐레이터 장소 등록
@@ -344,15 +360,12 @@
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
-      
-      <!-- 모달 폼 바디 -->
       <form id="curatorForm" onsubmit="handleCuratorSubmit(event)" class="p-5 sm:p-6 space-y-4 overflow-y-auto flex-grow text-xs text-slate-600 dark:text-midnight-300 bg-white dark:bg-midnight-900">
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">장소명 *</label>
           <input type="text" id="addTitle" required placeholder="예: 연희동 ‘책과 소음의 경계’" 
             class="w-full bg-slate-50 dark:bg-midnight-950 border border-slate-200 dark:border-midnight-800 rounded-lg p-2.5 text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition">
         </div>
-        
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-slate-800 dark:text-white mb-1 font-medium">지역구/동 주소 *</label>
@@ -365,19 +378,16 @@
               class="w-full bg-slate-50 dark:bg-midnight-950 border border-slate-200 dark:border-midnight-800 rounded-lg p-2.5 text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition">
           </div>
         </div>
-
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">핵심 한 줄 요약 *</label>
           <input type="text" id="addOneLine" required placeholder="독자적인 컨셉을 보여주는 한 줄의 문장" 
             class="w-full bg-slate-50 dark:bg-midnight-950 border border-slate-200 dark:border-midnight-800 rounded-lg p-2.5 text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition">
         </div>
-
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">상세 검증 내용 *</label>
           <textarea id="addReview" rows="3" required placeholder="조도, 소음 수준, 착석 환경 등 고유의 판단 기준을 토대로 작성하세요." 
             class="w-full bg-slate-50 dark:bg-midnight-950 border border-slate-200 dark:border-midnight-800 rounded-lg p-2.5 text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal resize-none transition"></textarea>
         </div>
-
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">추천 무드 (복수 선택 가능) *</label>
           <div class="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-midnight-950 p-3 rounded-lg border border-slate-200 dark:border-midnight-800">
@@ -395,21 +405,17 @@
             </label>
           </div>
         </div>
-
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">이미지 주소 (미입력 시 기본 Unsplash 대체)</label>
           <input type="url" id="addImg" placeholder="https://images.unsplash.com/..." 
             class="w-full bg-slate-50 dark:bg-midnight-950 border border-slate-200 dark:border-midnight-800 rounded-lg p-2.5 text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition">
         </div>
-
         <div>
           <label class="block text-slate-800 dark:text-white mb-1 font-medium">정확한 오프라인 위치 주소 *</label>
           <input type="text" id="addAddress" required placeholder="예: 서울 종로구 필운대로3길 11" 
             class="w-full bg-slate-50 dark:bg-midnight-950 border border-slate-200 dark:border-midnight-800 rounded-lg p-2.5 text-slate-900 dark:text-white outline-none focus:border-slate-400 dark:focus:border-accent-teal transition">
         </div>
       </form>
-
-      <!-- 모달 푸터 액션 -->
       <div class="p-4 sm:p-5 border-t border-slate-200 dark:border-midnight-800 flex gap-2 bg-slate-50 dark:bg-midnight-950/20 flex-shrink-0">
         <button onclick="closeCuratorModal()" class="w-1/3 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-midnight-800 dark:hover:bg-midnight-700 dark:text-white rounded-lg transition text-xs font-medium">닫기</button>
         <button type="submit" id="curatorSubmitBtn" form="curatorForm" class="w-2/3 py-2.5 bg-slate-900 hover:bg-slate-800 text-white dark:bg-accent-teal dark:text-midnight-950 rounded-lg transition text-xs font-bold shadow-md">큐레이션 정식 등록</button>
@@ -417,7 +423,6 @@
     </div>
   </div>
 
-  <!-- 푸터 -->
   <footer class="border-t border-slate-200 dark:border-midnight-800/80 bg-slate-100 dark:bg-midnight-950 py-8 sm:py-10 mt-16 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center md:text-left flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 dark:text-midnight-300 space-y-4 md:space-y-0">
       <div>
@@ -434,15 +439,13 @@
     </div>
   </footer>
 
-  <!-- 알림 토스트 UI -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 dark:bg-midnight-800 border border-slate-800 dark:border-accent-teal/50 text-white px-4 py-2.5 rounded-lg text-xs font-medium shadow-2xl opacity-0 transform translate-y-2 pointer-events-none transition-all duration-300 flex items-center gap-2 max-w-[calc(100vw-3rem)]">
     <i data-lucide="info" class="w-4 h-4 text-accent-teal flex-shrink-0"></i>
     <span id="toastMsg" class="truncate">알림 메시지</span>
   </div>
 
-  <!-- 큐레이션 데이터 & 로직 스크립트 -->
   <script>
-    // 큐레이터가 엄선한 12가지 핵심 정적 장소 데이터
+    // 큐레이터가 엄선한 12가지 핵심 정적 장소 데이터 (복구 완료!)
     const staticPlacesData = [
       {
         id: "static-1",
@@ -545,7 +548,7 @@
         title: "문래 ‘철공소와 아틀리에’",
         area: "영등포구 문래동",
         oneLine: "철공소 골목 뒤편, 메탈릭 디자인과 모노톤 조명으로 완성한 인더스트리얼 북바.",
-        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이룹니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
+        review: "낮에는 스터디룸만큼 조용하며 밤에는 은은한 칵테일 바가 됩니다. 문래동 특유의 거친 텍스처와 세련된 공간 마감이 조화를 이웁니다. 디자이너들이 아이디어가 막힐 때 노트북을 들고 주로 도피하는 비밀 성지입니다.",
         tags: ["work", "night"],
         tagNames: ["#조용한작업", "#감각적혼술", "#인더스트리얼"],
         rating: "4.5",
@@ -581,7 +584,7 @@
         title: "신록의 숨바꼭질",
         area: "서대문구 창천동",
         oneLine: "도심 한복판 빌딩 숲 사이에 완벽히 은폐된 온실 속 보타닉 에스테틱 하우스.",
-        review: "수천 그루 of 식물이 매장을 감싸 안고 있어 자연 피톤치드 향이 은은하게 퍼집니다. 커피 외에 말차 라떼가 훌륭하며 테이블 간격이 엄청나게 넓어 프라이버시가 극대화되는 도심 속의 또 다른 숲속 정원입니다.",
+        review: "수천 그루의 식물이 매장을 감싸 안고 있어 자연 피톤치드 향이 은은하게 퍼집니다. 커피 외에 말차 라떼가 훌륭하며 테이블 간격이 엄청나게 넓어 프라이버시가 극대화되는 도심 속의 또 다른 숲속 정원입니다.",
         tags: ["date", "healing"],
         tagNames: ["#힙한데이트", "#아늑한쉼", "#식물카페"],
         rating: "4.7",
@@ -595,8 +598,8 @@
     let currentSort = 'latest'; 
     let visibleLimit = 6; 
     const PAGE_SIZE = 6;  
+    let currentActivePlaceId = null; 
 
-    // 테마 설정 (로컬스토리지 연계)
     function initTheme() {
       const savedTheme = localStorage.getItem('chwyl_theme');
       const isDark = savedTheme === null || savedTheme === 'dark';
@@ -643,14 +646,12 @@
 
     let activeEmoji = '';
 
-    // 무작위 에모지 마우스 커서 생성기
     function initEmojiCursor() {
       const emojis = ['🍗', '☕', '📖', '🎵'];
       activeEmoji = emojis[Math.floor(Math.random() * emojis.length)];
       updateEmojiCursor();
     }
 
-    // 테마 상태를 감지하여 조준점 색상을 재생성하는 렌더러
     function updateEmojiCursor() {
       if (!activeEmoji) return;
       const isDark = document.documentElement.classList.contains('dark');
@@ -689,7 +690,6 @@
       `;
     }
 
-    // 실시간 상단 스크롤 진행바 트래킹
     function updateScrollProgress() {
       const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -700,7 +700,6 @@
       }
     }
 
-    // "나만의 안식처 찾기" 연속 10회 탭 핸들링 로직
     let secretClickCount = 0;
     let secretClickTimeout;
 
@@ -725,14 +724,13 @@
       }
     }
 
-    // [서버리스 연동] 데이터 동적 초기화 및 하이브리드 보존망
+    // 데이터 동적 초기화 및 하이브리드 보존망
     async function initializeData() {
       const stored = localStorage.getItem('chwyl_custom_places');
       const localCustomPlaces = stored ? JSON.parse(stored) : [];
       let apiPlaces = [];
 
       try {
-        // Netlify 서버리스 함수 호출
         const response = await fetch('/.netlify/functions/api?action=getPlaces');
         if (response.ok) {
           const data = await response.json();
@@ -741,13 +739,11 @@
           }
         }
       } catch (error) {
-        console.warn("Netlify API 로드 지연/실패: 정적 로컬 데이터를 바탕으로 구동합니다.", error);
+        console.warn("Netlify API 로드 지연/실패: 로컬 정적 대체망으로 작동합니다.", error);
       }
 
-      // 데이터 병합 (우선순위: 로컬 저장 커스텀 ➡️ API 저장 커스텀 ➡️ 기본 12개 정적 장소)
       placesData = [...localCustomPlaces, ...apiPlaces, ...staticPlacesData];
 
-      // 혹시 모를 중복 렌더링 방지용 ID 기반 유니크화 정렬
       const uniquePlaces = [];
       const seenIds = new Set();
       placesData.forEach(place => {
@@ -763,7 +759,6 @@
       });
     }
 
-    // 장소 리스트 렌더링 로직
     function renderPlaces(filter = 'all', searchQuery = '') {
       const grid = document.getElementById('placesGrid');
       const loadMoreContainer = document.getElementById('loadMoreContainer');
@@ -782,7 +777,6 @@
         return matchesCategory && matchesQuery;
       });
 
-      // 정렬 조건 실시간 반영
       if (currentSort === 'rating') {
         filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
       } else if (currentSort === 'name') {
@@ -791,7 +785,6 @@
         filtered.sort((a, b) => a._originalIdx - b._originalIdx);
       }
 
-      // 갯수 표시 업데이트
       document.getElementById('countNum').textContent = filtered.length;
 
       if (filtered.length === 0) {
@@ -813,11 +806,10 @@
         const card = document.createElement('div');
         card.id = `place-card-${place.id}`;
         card.className = "bg-white dark:bg-midnight-900 border border-slate-200/60 dark:border-midnight-850 hover:border-slate-400 dark:hover:border-midnight-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md dark:shadow-lg hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer group";
-        card.setAttribute('onclick', `openModal('${place.id}', this)`); // ID가 문자열일 수 있으므로 쿼트 처리
+        card.setAttribute('onclick', `openModal('${place.id}', this)`); 
         
         card.innerHTML = `
           <div>
-            <!-- 이미지 영역 -->
             <div class="relative h-48 bg-slate-900 overflow-hidden">
               <img src="${place.img}" alt="${place.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80'">
               <div class="absolute top-3 left-3 bg-white/90 dark:bg-midnight-950/80 backdrop-blur-md border border-slate-200 dark:border-midnight-800 text-slate-800 dark:text-white text-[10px] px-2 py-0.5 rounded-md font-light shadow-sm">
@@ -827,15 +819,11 @@
                 <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-500 dark:fill-accent-teal dark:text-accent-teal"></i> <span class="dark:text-accent-teal">${place.rating}</span>
               </div>
             </div>
-
-            <!-- 텍스트 설명 영역 -->
             <div class="p-5">
               <h3 class="text-base font-semibold text-slate-900 dark:text-white group-hover:text-slate-600 dark:group-hover:text-accent-teal transition mb-2">${place.title}</h3>
               <p class="text-xs text-slate-500 dark:text-midnight-300 leading-relaxed line-clamp-2 font-light">${place.oneLine}</p>
             </div>
           </div>
-
-          <!-- 하단 정보 매칭용 태그 -->
           <div class="px-5 pb-5 pt-0">
             <div class="flex flex-wrap gap-1">
               ${place.tagNames.map(tag => `<span class="bg-slate-100 dark:bg-midnight-950 text-slate-600 dark:text-midnight-300 text-[9px] px-2 py-0.5 rounded border border-slate-200/50 dark:border-midnight-850">${tag}</span>`).join('')}
@@ -854,13 +842,11 @@
       lucide.createIcons();
     }
 
-    // 더 보기 클릭 핸들러
     function loadMore() {
       visibleLimit += PAGE_SIZE;
       renderPlaces(currentFilter, document.getElementById('searchInput').value);
     }
 
-    // 카테고리 필터 변경 제어
     function filterCategory(category) {
       currentFilter = category;
       visibleLimit = PAGE_SIZE; 
@@ -878,13 +864,11 @@
       renderPlaces(category, document.getElementById('searchInput').value);
     }
 
-    // 정렬 드롭다운 제어
     function handleSortChange(value) {
       currentSort = value;
       renderPlaces(currentFilter, document.getElementById('searchInput').value);
     }
 
-    // 상단 퀵 숏컷 제어
     function setSearch(value) {
       const searchInput = document.getElementById('searchInput');
       searchInput.value = value;
@@ -892,7 +876,6 @@
       renderPlaces(currentFilter, value);
     }
 
-    // 필터 전부 초기화
     function resetAllFilters() {
       document.getElementById('searchInput').value = '';
       visibleLimit = PAGE_SIZE; 
@@ -902,16 +885,137 @@
       showToast("모든 검색 필터가 초기화되었습니다.");
     }
 
-    // 모달창 팝업 제어
+    // 무점수 댓글 동적 로더
+    async function loadComments(placeId) {
+      const commentList = document.getElementById('commentList');
+      const commentCount = document.getElementById('commentCount');
+      commentList.innerHTML = `<div class="text-[10px] text-slate-400 dark:text-midnight-300 animate-pulse py-2">대화 기록을 연결하는 중...</div>`;
+      
+      const isGitHubPlace = !placeId.startsWith('static-') && !placeId.startsWith('local-');
+      let comments = [];
+
+      if (isGitHubPlace) {
+        try {
+          const response = await fetch(`/.netlify/functions/api?action=getComments&discussionId=${placeId}`);
+          if (response.ok) {
+            const data = await response.json();
+            comments = data.comments || [];
+          }
+        } catch (error) {
+          console.warn("클라우드 댓글 로딩 실패, 로컬 임시 데이터망을 탐색합니다.", error);
+        }
+      }
+
+      if (comments.length === 0) {
+        const stored = localStorage.getItem(`chwyl_comments_${placeId}`);
+        comments = stored ? JSON.parse(stored) : [];
+      }
+
+      commentCount.textContent = `(${comments.length})`;
+      if (comments.length === 0) {
+        commentList.innerHTML = `<div class="text-[10px] text-slate-400 dark:text-midnight-700/80 py-4 font-light text-center">아직 남겨진 피드백이 없습니다. 첫 발자국을 남겨보세요.</div>`;
+        return;
+      }
+
+      commentList.innerHTML = comments.map(cmt => {
+        const dateStr = new Date(cmt.createdAt).toLocaleDateString('ko-KR', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        return `
+          <div class="bg-slate-50 dark:bg-midnight-950/30 p-2 sm:p-2.5 rounded-lg border border-slate-100 dark:border-midnight-800/40 flex flex-col gap-0.5">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-800 dark:text-white text-[10px]">${escapeHtml(cmt.author)}</span>
+              <span class="text-[8px] text-slate-400 dark:text-midnight-700">${dateStr}</span>
+            </div>
+            <p class="text-slate-600 dark:text-midnight-300 text-[10px] leading-relaxed font-light break-words">${escapeHtml(cmt.text)}</p>
+          </div>
+        `;
+      }).join('');
+
+      commentList.scrollTop = commentList.scrollHeight;
+    }
+
+    // 신규 무점수 댓글 제출 프로세서
+    async function submitComment() {
+      const nicknameInput = document.getElementById('commentNickname');
+      const textInput = document.getElementById('commentText');
+      const submitBtn = document.getElementById('commentSubmitBtn');
+
+      const nickname = nicknameInput.value.trim();
+      const text = textInput.value.trim();
+
+      if (!nickname || !text) {
+        showToast("닉네임과 의견을 모두 입력해 주세요.");
+        return;
+      }
+
+      if (!currentActivePlaceId) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "등록 중";
+
+      const isGitHubPlace = !currentActivePlaceId.startsWith('static-') && !currentActivePlaceId.startsWith('local-');
+      let apiSuccess = false;
+
+      if (isGitHubPlace) {
+        try {
+          const response = await fetch('/.netlify/functions/api?action=createComment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              discussionId: currentActivePlaceId,
+              nickname,
+              text
+            })
+          });
+          if (response.ok) {
+            apiSuccess = true;
+            showToast("의견이 클라우드에 실시간 기록되었습니다.");
+          }
+        } catch (error) {
+          console.warn("API 댓글 전송 실패, 로컬 백업망에 저장합니다.", error);
+        }
+      }
+
+      if (!apiSuccess) {
+        const localComment = {
+          id: `cmt-${Date.now()}`,
+          author: nickname,
+          text: text,
+          createdAt: new Date().toISOString()
+        };
+        const key = `chwyl_comments_${currentActivePlaceId}`;
+        const stored = localStorage.getItem(key);
+        const comments = stored ? JSON.parse(stored) : [];
+        comments.push(localComment);
+        localStorage.setItem(key, JSON.stringify(comments));
+        showToast("의견이 내 저장공간에 안전하게 보관되었습니다.");
+      }
+
+      textInput.value = '';
+      submitBtn.disabled = false;
+      submitBtn.textContent = "등록";
+
+      await loadComments(currentActivePlaceId);
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
     function openModal(id, cardElement) {
       const place = placesData.find(p => p.id === id);
       if (!place) return;
+
+      currentActivePlaceId = id; 
 
       const modal = document.getElementById('detailModal');
       const content = document.getElementById('modalContent');
       const textContainer = document.getElementById('modalTextContainer');
 
-      // 1. 정보 주입
       document.getElementById('modalImg').src = place.img;
       document.getElementById('modalImg').onerror = function() {
         this.src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80";
@@ -926,21 +1030,22 @@
       const tagsContainer = document.getElementById('modalTags');
       tagsContainer.innerHTML = place.tagNames.map(t => `<span>${t}</span>`).join(' ');
 
+      document.getElementById('commentNickname').value = '';
+      document.getElementById('commentText').value = '';
+      loadComments(id);
+
       lucide.createIcons();
 
-      // 2. 텍스트 정보 박스 초기화
       textContainer.style.transition = 'none';
       textContainer.style.opacity = '0';
       textContainer.style.transform = 'translateY(16px)';
 
-      // 3. 모달 오버레이 배경 노출
       modal.classList.remove('pointer-events-none', 'opacity-0');
       modal.classList.add('opacity-100');
 
       const isMobile = window.innerWidth < 640;
 
       if (cardElement && !isMobile) {
-        // [데스크톱 - FLIP 애니메이션 작동]
         const firstRect = cardElement.getBoundingClientRect();
 
         content.style.transition = 'none';
@@ -954,7 +1059,7 @@
         const translateY = firstRect.top - lastRect.top;
 
         content.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-        content.offsetHeight; // Reflow 강제
+        content.offsetHeight; 
 
         content.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
         content.style.transform = 'translate(0, 0) scale(1)';
@@ -965,7 +1070,6 @@
           textContainer.style.transform = 'translateY(0)';
         }, 300);
       } else {
-        // [모바일 - 페이드 인 모션으로 우회 조율]
         content.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
         content.style.transform = 'scale(1)';
         
@@ -977,7 +1081,6 @@
       }
     }
 
-    // 모달 닫기
     function closeModal() {
       const modal = document.getElementById('detailModal');
       const content = document.getElementById('modalContent');
@@ -992,10 +1095,10 @@
       setTimeout(() => {
         modal.classList.add('opacity-0', 'pointer-events-none');
         modal.classList.remove('opacity-100');
+        currentActivePlaceId = null; 
       }, 100);
     }
 
-    // 큐레이터 추가 모달 핸들링
     function openCuratorModal() {
       const modal = document.getElementById('curatorModal');
       const content = document.getElementById('curatorModalContent');
@@ -1018,7 +1121,6 @@
       document.getElementById('curatorForm').reset();
     }
 
-    // [서버리스 연동] 신규 큐레이션 서브밋 처리
     async function handleCuratorSubmit(event) {
       event.preventDefault();
       
@@ -1062,7 +1164,6 @@
         address
       };
 
-      // 제출 중 UI 블로킹 처리
       const submitBtn = document.getElementById('curatorSubmitBtn');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = "클라우드 등록 중...";
@@ -1071,7 +1172,6 @@
       let apiSuccess = false;
 
       try {
-        // Netlify Functions를 통한 GitHub Discussions 포스팅 요청
         const response = await fetch('/.netlify/functions/api?action=createPlace', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1089,7 +1189,6 @@
         console.warn("Netlify API 전송 실패: 로컬 브라우저 메모리에 임시 보관합니다.", error);
       }
 
-      // API 연동 실패/지연 시 하이브리드 로컬 백업 세이프티 가동
       if (!apiSuccess) {
         const localPlace = {
           id: `local-${Date.now()}`,
@@ -1103,25 +1202,21 @@
         showToast(`[로컬 보관] '${title}'이(가) 브라우저 메모리에 등록되었습니다.`);
       }
 
-      // UI 정상 복구
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
       
       closeCuratorModal();
       
-      // 즉각 비동기 동기화 로드 실행
       await initializeData();
       renderPlaces(currentFilter, document.getElementById('searchInput').value);
     }
 
-    // 커스텀 가상 보관함 기능
     function bookmarkPlace() {
       const title = document.getElementById('modalTitle').textContent;
       closeModal();
       showToast(`'${title}'이(가) 내 취향 보관함에 저장되었습니다.`);
     }
 
-    // 자체 알림 메커니즘
     function showToast(msg) {
       const toast = document.getElementById('toast');
       const toastMsg = document.getElementById('toastMsg');
@@ -1136,34 +1231,26 @@
       }, 3000);
     }
 
-    // 이벤트 리스너 마운트
     window.addEventListener('DOMContentLoaded', async () => {
-      // 테마 초기 로드 설정
       initTheme();
-
-      // 무작위 에모지 커서 실행
       initEmojiCursor();
 
-      // 실시간 인풋 검색 바인딩
       document.getElementById('searchInput').addEventListener('input', (e) => {
         renderPlaces(currentFilter, e.target.value);
       });
 
-      // 바깥 영역 클릭 시 상세 모달 닫기
       document.getElementById('detailModal').addEventListener('click', (e) => {
         if (e.target === document.getElementById('detailModal')) {
           closeModal();
         }
       });
 
-      // 바깥 영역 클릭 시 큐레이터 모달 닫기
       document.getElementById('curatorModal').addEventListener('click', (e) => {
         if (e.target === document.getElementById('curatorModal')) {
           closeCuratorModal();
         }
       });
 
-      // 이스케이프 키 모달 바인딩
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeModal();
@@ -1171,11 +1258,9 @@
         }
       });
 
-      // 스크롤 트래커 연동
       window.addEventListener('scroll', updateScrollProgress);
       updateScrollProgress();
 
-      // 기본 데이터 빌드 및 비비동기 렌더링
       await initializeData();
       renderPlaces();
       lucide.createIcons();
